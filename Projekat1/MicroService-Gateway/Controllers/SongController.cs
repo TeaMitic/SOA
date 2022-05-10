@@ -61,5 +61,24 @@ public class SongController : ControllerBase
         }
     }
 
+    [HttpPost]
+    [Route("AddOne")]
+    public async Task<IActionResult> AddOne([FromBody]Song song)
+    {
+        try
+        {
+            bool response = await _songService.AddOneAsync(song);
+            if(!response)
+            {
+                return StatusCode(400, "Song not added.");
+            }
+            return StatusCode(200, "Song successfully added");            
+        }
+        catch (Exception ex)
+        {            
+            return StatusCode(500,ex.Message);    
+        }
+    }
+
 
 }
