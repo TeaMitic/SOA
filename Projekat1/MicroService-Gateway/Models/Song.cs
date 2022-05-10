@@ -1,9 +1,9 @@
 using CsvHelper.Configuration;
 
-namespace MicroService_Gateway.DTO
+namespace MicroService_Gateway.Models
 {
     
-    public class SongDTO { 
+    public class Song { 
         public string? TrackName { get; set; }
         public string? ArtistName { get; set; }
         public string? Genre { get; set; }
@@ -19,7 +19,7 @@ namespace MicroService_Gateway.DTO
         public int Popularity { get; set; }
     }
 
-    public class SongClassMap : ClassMap<SongDTO> { 
+    public class SongClassMap : ClassMap<Song> { 
         public SongClassMap() { 
             Map(s => s.TrackName).Name("Track_Name");
             Map(s => s.ArtistName).Name("Artist_Name");
