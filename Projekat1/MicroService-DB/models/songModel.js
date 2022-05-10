@@ -15,43 +15,43 @@ const songSchema = new Schema({
         required: true
     },
     beatsPerMinute:{
-        type: String,
+        type: Number,
         required: true
     },
     energy:{
-        type: String,
+        type: Number,
         required: true
     },
     danceability:{
-        type: String,
+        type: Number,
         required: true
     },
-    loudnesIndB:{
-        type: String,
+    loudnessIndB:{
+        type: Number,
         required: true
     },
     liveness:{
-        type: String,
+        type: Number,
         required: true
     },
     valence:{
-        type: String,
+        type: Number,
         required: true
     },
     lenght:{
-        type: String,
+        type: Number,
         required: true
     },
     acousticness:{
-        type: String,
+        type: Number,
         required: true
     },
     speechiness:{
-        type: String,
+        type: Number,
         required: true
     },
     popularity:{
-        type: String,
+        type: Number,
         required: true
     } 
 })
