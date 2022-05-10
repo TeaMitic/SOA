@@ -75,9 +75,9 @@ const DeleteOne = async (req,res) => {
 const EditOne = async (req,res) => { 
     try { 
         let result = await Song.findOneAndUpdate({
-            artistName: req.body.searchFilter.artistName,
-            trackName: req.body.searchFilter.trackName
-        },getSongJson(req.body.updateObject))
+            artistName: req.body.artist,
+            trackName: req.body.track
+        },getSongJson(req.body.song))
         let sendInfo = null
         if (!result) { 
             sendInfo = "Error: Song not found."

@@ -1,6 +1,8 @@
 using MicroService_Gateway.Models;
+using MicroService_Gateway.DTO;
 using MicroService_Gateway.Services.Urls;
 using RestSharp;
+using Newtonsoft.Json;
 
 
 namespace MicroService_Gateway.Services
@@ -13,14 +15,12 @@ namespace MicroService_Gateway.Services
         }
         public async Task<bool> AddOneAsync(Song song)
         {
-            // throw new NotImplementedException();
             try
             {
                 var request = new RestRequest($"addOne").AddBody(song);
                 var response = await _client.ExecutePostAsync(request);
                 if (!response.IsSuccessful)
                 {
-                    // Console.WriteLine(response.Content); 
                     return false;   
                 }
                 return true;               
@@ -39,7 +39,6 @@ namespace MicroService_Gateway.Services
                 var response = await _client.DeleteAsync(request);
                 if (!response.IsSuccessful)
                 {
-                    // Console.WriteLine(response.Content); 
                     return false;   
                 }
                 return true;               
@@ -51,9 +50,25 @@ namespace MicroService_Gateway.Services
 
         }
 
-        public Task<bool> EditOneAsync(string artist, string track, Song updateObject)
+        public async Task<bool> EditOneAsync(EditSong updatedSong)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            try
+            {
+                var request = new RestRequest($"editOne").AddBody(updatedSong);
+                Console.WriteLine(JsonConvert.SerializeObject(updatedSong));
+                var response = await _client.ExecutePutAsync(request);
+                if (!response.IsSuccessful)
+                {
+                    return false;   
+                }
+                return true;
+                
+            }
+            catch (Exception ex)
+            {    
+                throw ex;
+            }
         }
 
         public async Task<Song?> GetOneAsync(string artist, string track)
