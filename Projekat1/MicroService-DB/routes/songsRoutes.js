@@ -3,9 +3,12 @@ const router = express.Router()
 
 const{
     AddOne,
-    AddMany
+    AddMany,
+    GetOne
 
 } = require('../controllers/songsController')
+
+router.get('/get/:artist/:track', GetOne)
 
 router.post('/addOne', AddOne)
 router.post('/addMany', AddMany)
