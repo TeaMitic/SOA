@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ISongService, SongService>();
+builder.Services.AddTransient<ILyricsService, LyricsService>();
 
 var app = builder.Build();
 

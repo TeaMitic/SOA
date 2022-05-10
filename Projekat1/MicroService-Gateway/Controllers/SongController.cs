@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MicroService_Gateway.Services;
 using MicroService_Gateway.Models;
+using MicroService_Gateway.DTO;
 
 namespace MicroService_Gateway.Controllers;
 
@@ -11,10 +12,12 @@ public class SongController : ControllerBase
 {
    
     private readonly ISongService _songService;
+    private readonly ILyricsService _lyricsService;
 
-    public SongController(ISongService songService)
+    public SongController(ISongService songService, ILyricsService lyricsService)
     {
         _songService = songService;
+        _lyricsService = lyricsService;
     }
 
     // [HttpPost(Name = "LoadDB")]
@@ -32,9 +35,12 @@ public class SongController : ControllerBase
             Song? song = await _songService.GetOneAsync(artist,track);
             if (song == null) 
             { 
-                return StatusCode(400,"Song not found."); //refactor: message is sent from other microservice
+                return StatusCode(400,"Error: Song not found."); //refactor: message is sent from other microservice
             }
-            return StatusCode(200,song);    
+            string? lyrics = await _lyricsService.GetLyricsAsync(artist,track);
+
+            SongAndLyrics songAndLyrics = new SongAndLyrics(song,lyrics);                
+            return StatusCode(200,songAndLyrics);    
         }
         catch (Exception ex)
         {
