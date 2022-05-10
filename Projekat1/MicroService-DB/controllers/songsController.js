@@ -11,7 +11,7 @@ const getSongJson = (body) => {
         beatsPerMinute: body.beatsPerMinute,
         energy: body.energy,
         danceability: body.danceability,
-        loudnesIndB:body.loudnesIndB,
+        loudnessIndB:body.loudnessIndB,
         liveness: body.liveness,
         valence: body.valence,
         lenght: body.lenght,
