@@ -14,8 +14,9 @@ app.use('/api/songs', songs)
 const dbURI = 'mongodb+srv://soa-projekat1:SOAProjekat1@soa-projekat1.0os6d.mongodb.net/SongsDB?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) =>{
-  app.listen(5000,() => {
-    console.log('Server is listening on port 5000...');
+    console.log('Mongo instance is running.');
+    app.listen(5000,() => {
+      console.log('Server is listening on port 5000...');
     });
   })
   .catch((err) => console.log(err));

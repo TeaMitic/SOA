@@ -5,6 +5,7 @@ const Song = require('../models/songModel')
 
 const AddOne = async (req,res)=>{
     try {
+        //can be put in separe function createOne
         const song = await Song.create({
             trackName: req.body.trackName,
             artistName: req.body.artistName,
@@ -32,42 +33,26 @@ const AddOne = async (req,res)=>{
     }
 }
 
-const AddMany = async (songs)=>{
-    await Song.insertMany(songs).then(()=> {
-        let sendInfo = "Songs successfully added"
+const AddMany = async (req,res)=>{
+    try { 
+        let result = await Song.insertMany(req.body)
+        let sendInfo = null
+        if (!result) { 
+            sendInfo = "Error while adding songs."
+            res.status(400).send(sendInfo)
+
+        }
+        sendInfo = "Songs successfully added."
         res.status(200).send(sendInfo)
-    })
-    .catch(function (err) {
-        response.status(500).send(err.message);
-    });
-    // try{
-        // songs.forEach(element => {
-        //     const song = await Song.create({
-        //         trackName: element.trackName,
-        //         artistName: element.artistName,
-        //         genre: element.genre,
-        //         beatsPerMinute: element.beatsPerMinute,
-        //         energy: element.energy,
-        //         danceability: element.danceability,
-        //         loudnesIndB: element.loudnesIndB,
-        //         liveness: element.liveness,
-        //         valence: element.artvalenceistName,
-        //         lenght: element.lenght,
-        //         acousticness: element.acousticness,
-        //         speechiness: element.speechiness,
-        //         popularity: element.popularity
-        //     })
-            
-        // });
-        // let sendInfo = "Songs successfully added"
-        // res.status(200).send(sendInfo)
-        
-//     } catch (error) {
-//         res.status(500).send(error.message)
-//     }
+    }
+    catch(error) { 
+        res.status(500).send(error.message)
+    }
+   
 }
 
 module.exports ={
     AddOne,
     AddMany
 }
+
