@@ -102,7 +102,6 @@ const GetOne = async (req,res)=>{
             sendInfo = "Error: Song not found"
             return res.status(400).send(sendInfo)
         }
-        console.log(result)
         sendInfo = "Song successfully found"
         res.status(200).send(result)
 

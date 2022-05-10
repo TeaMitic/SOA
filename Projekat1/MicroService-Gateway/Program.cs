@@ -1,4 +1,4 @@
-using MicroService_Gateway.Repository;
+using MicroService_Gateway.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<ISongRepository, SongRepository>();
+builder.Services.AddTransient<ISongService, SongService>();
 
 var app = builder.Build();
 

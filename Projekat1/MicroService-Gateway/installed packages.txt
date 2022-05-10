@@ -1,2 +1,4 @@
 HTTP REPL => dotnet tool install -g Microsoft.dotnet-httprepl
-CsvHelper => dotnet add package CsvHelper --version 27.2.1
+CsvHelper => dotnet add package CsvHelper 
+RestSharp => dotnet add package RestSharp
+Newtonsoft.Json => dotnet add package Newtonsoft.Json 

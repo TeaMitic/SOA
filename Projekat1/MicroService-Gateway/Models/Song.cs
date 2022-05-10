@@ -7,16 +7,16 @@ namespace MicroService_Gateway.Models
         public string? TrackName { get; set; }
         public string? ArtistName { get; set; }
         public string? Genre { get; set; }
-        public int BeatsPerMinute { get; set; }
-        public int Energy { get; set; }
-        public int Danceability { get; set; }
-        public int LoudnessIn_dB { get; set; }
-        public int Liveness { get; set; }
-        public int Valence { get; set; }
-        public int Lenght { get; set; }
-        public int Acousticness { get; set; }
-        public int Speechiness { get; set; }
-        public int Popularity { get; set; }
+        public int? BeatsPerMinute { get; set; }
+        public int? Energy { get; set; }
+        public int? Danceability { get; set; }
+        public int? LoudnessIn_dB { get; set; }
+        public int? Liveness { get; set; }
+        public int? Valence { get; set; }
+        public int? Lenght { get; set; }
+        public int? Acousticness { get; set; }
+        public int? Speechiness { get; set; }
+        public int? Popularity { get; set; }
     }
 
     public class SongClassMap : ClassMap<Song> { 
