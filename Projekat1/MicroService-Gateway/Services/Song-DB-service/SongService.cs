@@ -11,17 +11,33 @@ namespace MicroService_Gateway.Services
         public SongService() { 
             _client = new RestClient(ApiUrls.DB_URL);
         }
-        public Task AddOneAsync(Song song)
+        public Task<bool> AddOneAsync(Song song)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteOneAsync(string artist, string track)
+        public async Task<bool> DeleteOneAsync(string artist, string track)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            try
+            {
+                var request = new RestRequest($"delete/{artist}/{track}");
+                var response = await _client.DeleteAsync(request);
+                if (!response.IsSuccessful)
+                {
+                    // Console.WriteLine(response.Content); 
+                    return false;   
+                }
+                return true;               
+            }
+            catch (Exception ex)
+            {    
+                throw ex;
+            }
+
         }
 
-        public Task EditOneAsync(string artist, string track, Song updateObject)
+        public Task<bool> EditOneAsync(string artist, string track, Song updateObject)
         {
             throw new NotImplementedException();
         }
