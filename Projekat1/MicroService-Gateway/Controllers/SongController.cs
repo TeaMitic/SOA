@@ -86,5 +86,25 @@ public class SongController : ControllerBase
         }
     }
 
+    [HttpPut]
+    [Route("EditOne")]
+    public async Task<IActionResult> EditOne([FromBody]EditSong updatedSong)
+    {
+        try
+        {
+            bool response = await _songService.EditOneAsync(updatedSong);
+            if(!response)
+            {
+                return StatusCode(400, "Song not updated.");
+            }
+            return StatusCode(200, "Song successfully updated");      
+            
+        }
+        catch (Exception ex)
+        {            
+            return StatusCode(500,ex.Message);    
+        }
+    }
+
 
 }
