@@ -47,6 +47,44 @@ public class SongController : ControllerBase
             return StatusCode(500,ex.Message);    
         }
     }
+    
+    [HttpDelete]
+    [Route("DeleteOne/{artist}/{track}")]
+    public async Task<IActionResult> DeleteOne([FromRoute]string artist,[FromRoute]string track)
+    {
+        try
+        {
+           bool response = await _songService.DeleteOneAsync(artist,track);
+           if(!response)
+           {
+                return StatusCode(400, "Song not found.");
+           } 
+           return StatusCode(200, "Song successfully deleted.");
+        }
+        catch (Exception ex)
+        {            
+            return StatusCode(500,ex.Message);    
+        }
+    }
+
+    [HttpPost]
+    [Route("AddOne")]
+    public async Task<IActionResult> AddOne([FromBody]Song song)
+    {
+        try
+        {
+            bool response = await _songService.AddOneAsync(song);
+            if(!response)
+            {
+                return StatusCode(400, "Song not added.");
+            }
+            return StatusCode(200, "Song successfully added");            
+        }
+        catch (Exception ex)
+        {            
+            return StatusCode(500,ex.Message);    
+        }
+    }
 
 
 }
