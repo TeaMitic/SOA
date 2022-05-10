@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MicroService_Gateway.Services;
 using MicroService_Gateway.Models;
 using MicroService_Gateway.DTO;
+using Newtonsoft.Json;
 
 namespace MicroService_Gateway.Controllers;
 
@@ -39,7 +40,7 @@ public class SongController : ControllerBase
             }
             string? lyrics = await _lyricsService.GetLyricsAsync(artist,track);
 
-            SongAndLyrics songAndLyrics = new SongAndLyrics(song,lyrics);                
+            SongAndLyrics songAndLyrics = new SongAndLyrics(song,lyrics);    
             return StatusCode(200,songAndLyrics);    
         }
         catch (Exception ex)

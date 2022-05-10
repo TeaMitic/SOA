@@ -17,9 +17,9 @@ namespace MicroService_Gateway.Services
                 var response = await _client.ExecuteGetAsync<string>(request);
                 if (!response.IsSuccessful)
                 {
-                    return response.Data;   
+                    return response.Content;   
                 }
-                return response.Data;
+                return response.Content;
                 
             }
             catch (Exception ex)
