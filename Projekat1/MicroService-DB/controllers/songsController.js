@@ -40,11 +40,9 @@ const AddOne = async (req,res)=>{
 const AddMany = async (req,res)=>{
     try { 
         let result = await Song.insertMany(req.body)
-        let sendInfo = null
         if (!result) { 
-            sendInfo = "Error while adding songs."
-            res.status(400).send(sendInfo)
-
+            let sendInfo = "Error while adding songs."
+            return res.status(400).send(sendInfo)            
         }
         sendInfo = "Songs successfully added."
         res.status(200).send(sendInfo)
@@ -94,9 +92,29 @@ const EditOne = async (req,res) => {
     }
 }
 
+
+const GetOne = async (req,res)=>{
+    try {
+        let result = await Song.findOne({trackName : req.params.track , artistName: req.params.artist})
+        let sendInfo= ""
+
+        if(!result){
+            sendInfo = "Error: Song not found"
+            return res.status(400).send(sendInfo)
+        }
+        console.log(result)
+        sendInfo = "Song successfully found"
+        res.status(200).send(result)
+
+    } catch (error) {
+        
+    }
+}
+
 module.exports ={
     AddOne,
     AddMany,
+    GetOne,
     DeleteOne,
     EditOne
 }
