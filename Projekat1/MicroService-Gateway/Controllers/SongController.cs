@@ -29,12 +29,12 @@ public class SongController : ControllerBase
     { 
         try
         {
-            Song song = await _songService.GetOneAsync(artist,track);
-            if (song != null) 
+            Song? song = await _songService.GetOneAsync(artist,track);
+            if (song == null) 
             { 
-                return StatusCode(200,song);    
+                return StatusCode(400,"Song not found."); //refactor: message is sent from other microservice
             }
-            return StatusCode(400,"Song not found."); //refactor: message is sent from other microservice
+            return StatusCode(200,song);    
         }
         catch (Exception ex)
         {

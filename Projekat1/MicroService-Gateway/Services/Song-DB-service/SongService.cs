@@ -1,6 +1,5 @@
 using MicroService_Gateway.Models;
 using MicroService_Gateway.Services.Urls;
-using MicroService_Gateway.DTO;
 using RestSharp;
 
 
@@ -27,16 +26,24 @@ namespace MicroService_Gateway.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Song> GetOneAsync(string artist, string track)
+        public async Task<Song?> GetOneAsync(string artist, string track)
         {
-            var request = new RestRequest($"get/{artist}/{track}");
-            var response = await _client.ExecuteGetAsync<Song>(request);
-            Console.WriteLine(response.Content);
-            if (!response.IsSuccessful)
+            try
             {
-                return null;   
+                var request = new RestRequest($"get/{artist}/{track}");
+                var response = await _client.ExecuteGetAsync<Song>(request);
+                if (!response.IsSuccessful)
+                {
+                    Console.WriteLine(response.Content); 
+                    return null;   
+                }
+                return response.Data;
+                
             }
-            return response.Data;
+            catch (Exception ex)
+            {    
+                throw ex;
+            }
         }
     }
 }

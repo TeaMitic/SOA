@@ -17,6 +17,8 @@ namespace MicroService_Gateway.Models
         public int? Acousticness { get; set; }
         public int? Speechiness { get; set; }
         public int? Popularity { get; set; }
+
+       
     }
 
     public class SongClassMap : ClassMap<Song> { 
