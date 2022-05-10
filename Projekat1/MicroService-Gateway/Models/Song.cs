@@ -10,7 +10,7 @@ namespace MicroService_Gateway.Models
         public int? BeatsPerMinute { get; set; }
         public int? Energy { get; set; }
         public int? Danceability { get; set; }
-        public int? LoudnessIn_dB { get; set; }
+        public int? LoudnessIndB { get; set; }
         public int? Liveness { get; set; }
         public int? Valence { get; set; }
         public int? Lenght { get; set; }
@@ -27,7 +27,7 @@ namespace MicroService_Gateway.Models
             Map(s => s.BeatsPerMinute).Name("Beats_Per_Minute");
             Map(s => s.Energy);
             Map(s => s.Danceability);
-            Map(s => s.LoudnessIn_dB).Name("Loudness_dB");
+            Map(s => s.LoudnessIndB).Name("Loudness_dB");
             Map(s => s.Liveness);
             Map(s => s.Valence);
             Map(s => s.Lenght);
