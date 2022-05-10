@@ -56,6 +56,13 @@ const songSchema = new Schema({
     } 
 })
 
-const Song = mongoose.model('Song', songSchema)
+songSchema.index({
+    trackName: 1,
+    artistName: 1
+},{
+    unique: true,
+    name: "song-uniqueness"
+})
 
+const Song = mongoose.model('Song', songSchema)
 module.exports = Song
