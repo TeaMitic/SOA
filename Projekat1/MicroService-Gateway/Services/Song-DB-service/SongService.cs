@@ -3,7 +3,7 @@ using MicroService_Gateway.DTO;
 using MicroService_Gateway.Services.Urls;
 using RestSharp;
 using Newtonsoft.Json;
-
+using MicroService_Gateway.CSVWrapper;
 
 namespace MicroService_Gateway.Services
 {
@@ -76,10 +76,9 @@ namespace MicroService_Gateway.Services
             try
             {
                 var request = new RestRequest($"get/{artist}/{track}");
-                var response = await _client.ExecuteGetAsync<Song>(request);
+                var response = await _client.ExecuteGetAsync<Song>(request); //need refactoring 
                 if (!response.IsSuccessful)
                 {
-                    Console.WriteLine(response.Content); 
                     return null;   
                 }
                 return response.Data;
@@ -87,6 +86,44 @@ namespace MicroService_Gateway.Services
             }
             catch (Exception ex)
             {    
+                throw ex;
+            }
+        }
+
+       
+
+        public async Task<bool> LoadFromCSV(string filename,int chunkSize)
+        {
+            try
+            {
+                CsvHelperWrapper csvWrapper = new CsvHelperWrapper(filename);
+                int numOfsongsLoaded = 0;
+                int songsLeft = -1;
+                bool successfull = false;
+                bool eof = false;
+                IList<Song> songsLoadedInChunk = new List<Song>();
+                while (!eof) 
+                { 
+                    songsLoadedInChunk = csvWrapper.ReadMoreRecords(numOfsongsLoaded,chunkSize, ref eof);
+                    songsLeft = songsLoadedInChunk.Count();
+                    numOfsongsLoaded += songsLeft;
+                    //db service call 
+                    var request = new RestRequest($"addMany").AddJsonBody(songsLoadedInChunk);
+                    var response = await _client.ExecutePostAsync(request); 
+                    if (!response.IsSuccessful)
+                    {
+                        successfull = false;
+                        break;
+                    }
+                    successfull = true;
+                }
+                return successfull;
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
                 throw ex;
             }
         }

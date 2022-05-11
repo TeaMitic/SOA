@@ -21,12 +21,26 @@ public class SongController : ControllerBase
         _lyricsService = lyricsService;
     }
 
-    // [HttpPost(Name = "LoadDB")]
-    // public async Task<IActionResult> LoadDB()
-    // {
-    //     var data = async 
-    // }
-
+    [HttpPost]
+    [Route("LoadDBfromCSV")]
+    public async Task<IActionResult> LoadDBFromCSV([FromBody] int chunkSize = 10) 
+    {
+        try
+        {
+            bool result = await _songService.LoadFromCSV("..\\SongsDataset\\top50.csv",chunkSize);
+            if (result) 
+            {
+                return StatusCode(200,"Loaded into db.");
+            }
+            return StatusCode(400, "Erro: Failed to load db from CSV file");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return StatusCode(500,ex.Message);            
+        }
+    }
+    
     [HttpGet]
     [Route("GetOne/{artist}/{track}")]
     public async Task<IActionResult> GetOne([FromRoute]string artist, [FromRoute] string track)
@@ -38,7 +52,7 @@ public class SongController : ControllerBase
             { 
                 return StatusCode(400,"Error: Song not found."); //refactor: message is sent from other microservice
             }
-            string? lyrics = await _lyricsService.GetLyricsAsync(artist,track);
+            LyricsForSong? lyrics = await _lyricsService.GetLyricsAsync(artist,track);
 
             SongAndLyrics songAndLyrics = new SongAndLyrics(song,lyrics);    
             return StatusCode(200,songAndLyrics);    

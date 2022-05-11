@@ -38,7 +38,7 @@ const songSchema = new Schema({
         type: Number,
         required: true
     },
-    lenght:{
+    length:{
         type: Number,
         required: true
     },

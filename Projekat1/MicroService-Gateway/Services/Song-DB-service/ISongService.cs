@@ -9,7 +9,7 @@ namespace MicroService_Gateway.Services
         Task<bool> EditOneAsync(EditSong updateSong);
         Task<bool> DeleteOneAsync(string artist, string track);
         Task<bool> AddOneAsync(Song song);
-        //Task ImportFromCS(nesto)
+        Task<bool> LoadFromCSV(string filename,int chunkSize);
 
 
     }

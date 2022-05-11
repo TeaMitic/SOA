@@ -1,4 +1,5 @@
 using MicroService_Gateway.Services.Urls;
+using MicroService_Gateway.DTO;
 using RestSharp;
 
 namespace MicroService_Gateway.Services
@@ -9,17 +10,17 @@ namespace MicroService_Gateway.Services
         public LyricsService() { 
             _client = new RestClient(ApiUrls.LYRICS_URL);
         }
-        public async Task<string?> GetLyricsAsync(string artist, string track)
+        public async Task<LyricsForSong?> GetLyricsAsync(string artist, string track)
         {
             try
             {
                 var request = new RestRequest($"{artist}/{track}");
-                var response = await _client.ExecuteGetAsync<string>(request);
+                var response = await _client.ExecuteGetAsync<LyricsForSong>(request);
                 if (!response.IsSuccessful)
                 {
-                    return response.Content;   
+                    return null;   
                 }
-                return response.Content;
+                return response.Data;
                 
             }
             catch (Exception ex)

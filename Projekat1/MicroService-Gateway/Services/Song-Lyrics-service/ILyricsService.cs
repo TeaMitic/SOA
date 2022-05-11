@@ -1,7 +1,9 @@
+using MicroService_Gateway.DTO;
+
 namespace MicroService_Gateway.Services 
 {
     public interface ILyricsService 
     { 
-        Task<string?> GetLyricsAsync(string artist, string track); 
+        Task<LyricsForSong?> GetLyricsAsync(string artist, string track); 
     }
 }

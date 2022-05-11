@@ -7,10 +7,10 @@ namespace MicroService_Gateway.DTO
         public Song Song {get; set;}
         public string? Lyrics {get; set;}
 
-        public SongAndLyrics(Song song, string? lyrics)
+        public SongAndLyrics(Song song, LyricsForSong? lyrics)
         { 
             Song = song;
-            Lyrics = lyrics;
+            Lyrics = lyrics != null ? lyrics.Lyrics : "No lyrics found.";
         }
     }
 }

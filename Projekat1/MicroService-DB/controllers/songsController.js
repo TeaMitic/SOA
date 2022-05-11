@@ -14,7 +14,7 @@ const getSongJson = (body) => {
         loudnessIndB:body.loudnessIndB,
         liveness: body.liveness,
         valence: body.valence,
-        lenght: body.lenght,
+        length: body.length,
         acousticness: body.acousticness,
         speechiness: body.speechiness,
         popularity: body.popularity
@@ -72,6 +72,24 @@ const DeleteOne = async (req,res) => {
     }
 }
 
+const DeleteAll = async (req,res) => { 
+    try { 
+        
+        let result = await Song.deleteMany({}) //no filter 
+        let sendInfo = null
+        if (!result) { 
+            sendInfo = "Error: Songs not deleted."
+            return res.status(400).send(sendInfo)
+
+        }
+        sendInfo = "Songs successfully deleted."
+        res.status(200).send(sendInfo)
+    }
+    catch(error) { 
+        res.status(500).send(error.message)
+    }
+}
+
 const EditOne = async (req,res) => { 
     try { 
         let result = await Song.findOneAndUpdate({
@@ -115,6 +133,7 @@ module.exports ={
     AddMany,
     GetOne,
     DeleteOne,
-    EditOne
+    EditOne,
+    DeleteAll
 }
 

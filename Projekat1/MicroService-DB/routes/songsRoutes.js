@@ -6,7 +6,8 @@ const{
     AddMany,
     DeleteOne,
     EditOne,
-    GetOne
+    GetOne,
+    DeleteAll
 
 } = require('../controllers/songsController')
 
@@ -14,6 +15,7 @@ router.get('/get/:artist/:track', GetOne)
 router.post('/addOne', AddOne)
 router.post('/addMany', AddMany)
 router.delete('/delete/:artist/:track',DeleteOne)
+router.delete('/deleteAll',DeleteAll)
 router.put('/editOne',EditOne)
 
 module.exports = router
