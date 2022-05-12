@@ -21,18 +21,31 @@ public class SongController : ControllerBase
         _lyricsService = lyricsService;
     }
 
+    /// <summary> 
+    /// Loads songs in database from csv file.
+    /// </summary>
+    /// <returns></returns>
+    /// <param name="chunkSize">Chunk size for songs (How much songs to read from csv at once).</param>
+    /// <response code="200">Informs that songs are correctly loaded in db.</response>
+    /// <response code="400">Informs that client error occured during loading. (chunkSize less than 1)</response>
+    /// <response code="500">Informs that server error occured during loading.</response>
     [HttpPost]
-    [Route("LoadDBfromCSV")]
-    public async Task<IActionResult> LoadDBFromCSV([FromBody] int chunkSize = 10) 
+    [Route("LoadDBfromCSV/{chunkSize}")]
+    public async Task<IActionResult> LoadDBFromCSV([FromRoute] int chunkSize = 10) 
     {
         try
         {
+            if (chunkSize <= 0) 
+            {
+                return StatusCode(400, "Error: Chunk size must be positive number");
+
+            }
             bool result = await _songService.LoadFromCSV("..\\SongsDataset\\top50.csv",chunkSize);
             if (result) 
             {
                 return StatusCode(200,"Loaded into db.");
             }
-            return StatusCode(400, "Erro: Failed to load db from CSV file");
+            return StatusCode(400, "Error: Failed to load db from CSV file");
         }
         catch (Exception ex)
         {
@@ -41,6 +54,16 @@ public class SongController : ControllerBase
         }
     }
     
+    /// <summary> 
+    /// Gets one song.
+    /// </summary>
+    /// <returns>Returns song with lyrics if exists.</returns>
+    /// <param name="artist">Artist's full name</param>
+    /// <param name="track">Track's full name</param>
+    /// <response code="200">Returns song with or without lyrics.</response>
+    /// <response code="400">Some parameter is null or song does not exist in database.</response>
+    /// <response code="500">Informs that server error occured during getting the song.</response>
+
     [HttpGet]
     [Route("GetOne/{artist}/{track}")]
     public async Task<IActionResult> GetOne([FromRoute]string artist, [FromRoute] string track)
@@ -63,6 +86,14 @@ public class SongController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Deletes a song.
+    /// </summary>
+    /// <param name="artist">Artist's full name</param>
+    /// <param name="track">Track's full name</param>
+    /// <response code="200">Informs that song is deleted.</response>
+    /// <response code="400">Some parameter is null or song does not exist in database.</response>
+    /// <response code="500">Informs that server error occured during deleting the song.</response>
     [HttpDelete]
     [Route("DeleteOne/{artist}/{track}")]
     public async Task<IActionResult> DeleteOne([FromRoute]string artist,[FromRoute]string track)
@@ -82,6 +113,32 @@ public class SongController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Adds one song in db.
+    /// </summary>
+    /// <remarks>
+    /// Sample requrest: 
+    /// 
+    ///     {
+    ///         "trackName": "Lose yourself",
+    ///         "artistName": "Eminem",
+    ///         "genre": "rap",
+    ///         "beatsPerMinute": 25,
+    ///         "energy": 30,
+    ///         "danceability": 15,
+    ///         "loudnessIndB": 40,
+    ///         "liveness": 10,
+    ///         "valence": 50,
+    ///         "length": 60,
+    ///         "acousticness": 10,
+    ///         "speechiness": 80,
+    ///         "popularity": 100
+    ///     }
+    /// 
+    /// </remarks>
+    /// <response code="200">Informs that song is added.</response>
+    /// <response code="400">Some parameter is null or song already exists.</response>
+    /// <response code="500">Informs that server error occured during adding the song.</response>
     [HttpPost]
     [Route("AddOne")]
     public async Task<IActionResult> AddOne([FromBody]Song song)
@@ -101,6 +158,32 @@ public class SongController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Edits one song in db.
+    /// </summary>
+    /// <remarks>
+    /// Sample requrest: 
+    /// 
+    ///     {
+    ///         "trackName": "Lose yourself",
+    ///         "artistName": "Eminem",
+    ///         "genre": "rap",
+    ///         "beatsPerMinute": 25,
+    ///         "energy": 30,
+    ///         "danceability": 15,
+    ///         "loudnessIndB": 40,
+    ///         "liveness": 10,
+    ///         "valence": 50,
+    ///         "length": 60,
+    ///         "acousticness": 10,
+    ///         "speechiness": 80,
+    ///         "popularity": 100
+    ///     }
+    /// 
+    /// </remarks>
+    /// <response code="200">Informs that song is edited.</response>
+    /// <response code="400">Some parameter is null or song does exist in database.</response>
+    /// <response code="500">Informs that server error occured during editing the song.</response>
     [HttpPut]
     [Route("EditOne")]
     public async Task<IActionResult> EditOne([FromBody]EditSong updatedSong)

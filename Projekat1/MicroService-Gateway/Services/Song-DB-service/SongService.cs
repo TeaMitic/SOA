@@ -21,6 +21,10 @@ namespace MicroService_Gateway.Services
                 var response = await _client.ExecutePostAsync(request);
                 if (!response.IsSuccessful)
                 {
+                    if (response.ResponseStatus == ResponseStatus.None) 
+                    {
+                        throw response.ErrorException;
+                    }
                     return false;   
                 }
                 return true;               
@@ -39,6 +43,10 @@ namespace MicroService_Gateway.Services
                 var response = await _client.DeleteAsync(request);
                 if (!response.IsSuccessful)
                 {
+                    if (response.ResponseStatus == ResponseStatus.None) 
+                    {
+                        throw response.ErrorException;
+                    }
                     return false;   
                 }
                 return true;               
@@ -60,6 +68,10 @@ namespace MicroService_Gateway.Services
                 var response = await _client.ExecutePutAsync(request);
                 if (!response.IsSuccessful)
                 {
+                    if (response.ResponseStatus == ResponseStatus.None) 
+                    {
+                        throw response.ErrorException;
+                    }
                     return false;   
                 }
                 return true;
@@ -79,6 +91,10 @@ namespace MicroService_Gateway.Services
                 var response = await _client.ExecuteGetAsync<Song>(request); //need refactoring 
                 if (!response.IsSuccessful)
                 {
+                    if (response.ResponseStatus == ResponseStatus.None) 
+                    {
+                        throw response.ErrorException;
+                    }
                     return null;   
                 }
                 return response.Data;
@@ -112,6 +128,10 @@ namespace MicroService_Gateway.Services
                     var response = await _client.ExecutePostAsync(request); 
                     if (!response.IsSuccessful)
                     {
+                        if (response.ResponseStatus == ResponseStatus.None) 
+                        {
+                            throw response.ErrorException;
+                        }
                         successfull = false;
                         break;
                     }
