@@ -6,6 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>MicroService_Gateway</RootNamespace>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="27.2.1" />

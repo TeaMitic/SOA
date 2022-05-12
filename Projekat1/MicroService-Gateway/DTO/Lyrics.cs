@@ -4,9 +4,6 @@ namespace MicroService_Gateway.DTO
     {
         public string? Lyrics { get; set; }
 
-        // public LyricsForSong(string text) 
-        // {
-        //     Lyrics = text;
-        // }
+        
     }
 }
