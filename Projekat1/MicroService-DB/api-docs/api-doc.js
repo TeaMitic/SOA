@@ -89,6 +89,16 @@ const options ={
                             example: "100"
                         },
                    }
+               },
+               //trackName of a song
+               TrackName:{
+                    type: "string",
+                    description: "Name of a song"
+               },
+               //artistName of a song
+               ArtistName:{
+                    type: "string",
+                    description: "Artist name of a song"
                }
 
            }
@@ -102,7 +112,7 @@ const options ={
        ],
        
     },
-       apis: ['./routes/songsRoutes.js'],
+       apis: ['./MicroService-DB/routes/songsRoutes.js'],
 };
 
 module.exports = options
