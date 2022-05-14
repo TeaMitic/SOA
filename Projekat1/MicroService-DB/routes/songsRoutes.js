@@ -13,50 +13,99 @@ const{
 
 /**
  * @swagger
- * /get:
+ * /songs/get/{artist}/{track}:
  *    get:
+ *      summary: Returns a song with wanted name and artist
+ *      parameters:
+ *          - in:  path
+ *            name: artist
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: Name of the artist of the song
+ *          - in:  path
+ *            name: track
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: The song name
+ *      responses: 
+ *           200: 
+ *                description: Song is obtained
+ *                content:
+ *                   "application/json":
+ *                       schema:
+ *                           $ref: "#components/schemas/Song"
+ *           400: 
+ *               description: Song not found
+ *           
+ *           500:
+ *               description: Server error
+ *          
+ *       
  *      description: Get a song by track name and artist name
  */
 router.get('/get/:artist/:track', GetOne)
+
 /**
  * @swagger
- * /get:
- *    get:
- *      description: Get a song by track name and artist name
+ * /songs/addOne:
+ *    post:
+ *      summary: Add new song
+ *      description: Add song to mongoDB
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/Song'
+ *      responses: 
+ *           200: 
+ *               description: Song added successfully
+ *           400: 
+ *               description: Song not added. Song already exists or fields are not defined right.
+ *           
+ *           500:
+ *               description: Server error
+ *          
+ *       
  */
+
 router.post('/addOne', AddOne)
+
 /**
  * @swagger
- * /get:
- *    get:
- *      description: Get a song by track name and artist name
+ * /songs/addMany:
+ *    post:
+ *      summary: Add new songs
+ *      description: Add songs to mongoDB
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: array
+ *                      items:
+ *                          $ref: '#components/schemas/Song'
+ *      responses: 
+ *           200: 
+ *               description: Songs added successfully
+ *           400: 
+ *               description: Songs not added. One of the songs already exists or fields are not defined right.
+ *           
+ *           500:
+ *               description: Server error
+ *          
+ *       
  */
+
+ 
 router.post('/addMany', AddMany)
-/**
- * @swagger
- * /get:
- *    get:
- *      description: Get a song by track name and artist name
- */
+
 router.delete('/delete/:artist/:track',DeleteOne)
-/**
- * @swagger
- * /get:
- *    get:
- *      description: Get a song by track name and artist name
- */
+
 router.delete('/deleteAll',DeleteAll)
-/**
- * @swagger
- * /get:
- *    get:
- *      description: Get a song by track name and artist name
- */
+
 router.put('/editOne',EditOne)
-/**
- * @swagger
- * /get:
- *    get:
- *      description: Get a song by track name and artist name
- */
+
 module.exports = router

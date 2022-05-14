@@ -4,7 +4,7 @@ const addMany = require('./post-addMany')
 const editOne = require('./put-editOne')
 const deleteOne = require('./delete-deleteOne')
 const deleteAll = require('./delete-deleteAll')
-const apiDoc = require('./api-doc')
+const apiDoc = require('../api-doc')
 
 module.exports={
     ...apiDoc,

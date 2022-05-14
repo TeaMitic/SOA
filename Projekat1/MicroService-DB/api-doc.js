@@ -100,9 +100,7 @@ const options ={
                     type: "string",
                     description: "Artist name of a song"
                }
-
            }
-
        },
        servers: [
            {
@@ -112,7 +110,7 @@ const options ={
        ],
        
     },
-       apis: ['./MicroService-DB/routes/songsRoutes.js'],
+       apis: ['./routes/*.js'],
 };
 
 module.exports = options

@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const swaggerUI =require('swagger-ui-express')
 const swaggerJsDoc = require('swagger-jsdoc')
-const options = require('./api-docs/api-doc')
+const options = require('./api-doc')
 
 const songs= require('./routes/songsRoutes')
 const specs = swaggerJsDoc(options)
