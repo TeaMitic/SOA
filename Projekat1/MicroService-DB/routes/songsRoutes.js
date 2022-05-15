@@ -13,27 +13,27 @@ const{
 
 /**
  * @swagger
- * /songs/get/{artist}/{track}:
+ * /api/songs/get/{artist}/{track}:
  *    get:
  *      summary: Returns a song with wanted name and artist
  *      parameters:
  *          - in:  path
  *            name: artist
  *            schema:
- *              type: string
+ *               $ref: "#components/schemas/ArtistName"
  *            required: true
  *            description: Name of the artist of the song
  *          - in:  path
  *            name: track
  *            schema:
- *              type: string
+ *               $ref: "#components/schemas/TrackName"
  *            required: true
  *            description: The song name
  *      responses: 
  *           200: 
  *                description: Song is obtained
  *                content:
- *                   "application/json":
+ *                     application/json:
  *                       schema:
  *                           $ref: "#components/schemas/Song"
  *           400: 
@@ -49,7 +49,7 @@ router.get('/get/:artist/:track', GetOne)
 
 /**
  * @swagger
- * /songs/addOne:
+ * /api/songs/addOne:
  *    post:
  *      summary: Add new song
  *      description: Add song to mongoDB
@@ -75,7 +75,7 @@ router.post('/addOne', AddOne)
 
 /**
  * @swagger
- * /songs/addMany:
+ * /api/songs/addMany:
  *    post:
  *      summary: Add new songs
  *      description: Add songs to mongoDB
@@ -102,10 +102,82 @@ router.post('/addOne', AddOne)
  
 router.post('/addMany', AddMany)
 
+/**
+ * @swagger
+ * /api/songs/delete:
+ *    delete:
+ *      summary: Delete a song
+ *      description: Delete song from mongoDB
+ *      parameters:
+ *          - in:  path
+ *            name: artist
+ *            schema:
+ *               $ref: "#components/schemas/ArtistName"
+ *            required: true
+ *            description: Name of the artist of the song
+ *          - in:  path
+ *            name: track
+ *            schema:
+ *               $ref: "#components/schemas/TrackName"
+ *            required: true
+ *            description: The song name
+ *      responses: 
+ *           200: 
+ *               description: Songs deleted successfully
+ *           400: 
+ *               description: Songs not deleted. Fields are not defined right.
+ *           
+ *           500:
+ *               description: Server error
+ *          
+ *       
+ */
+
 router.delete('/delete/:artist/:track',DeleteOne)
 
+/**
+ * @swagger
+ * /api/songs/deleteAll:
+ *    delete:
+ *      summary: Delete all songs
+ *      description: Delete all songs from mongoDB
+ *      
+ *      responses: 
+ *           200: 
+ *               description: All songs deleted successfully.
+ *           400: 
+ *               description: Songs not deleted.
+ *           
+ *           500:
+ *               description: Server error
+ *          
+ *       
+ */
 router.delete('/deleteAll',DeleteAll)
 
+/**
+ * @swagger
+ * /api/songs/editOne:
+ *    put:
+ *      summary: Edit a song
+ *      description: Edit song in mongoDB
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                       $ref: '#components/schemas/Song'
+ *      responses: 
+ *           200: 
+ *               description: Songs edited successfully
+ *           400: 
+ *               description: Songs not edited. Fields are not defined right.
+ *           
+ *           500:
+ *               description: Server error
+ *          
+ *       
+ */
 router.put('/editOne',EditOne)
 
 module.exports = router
