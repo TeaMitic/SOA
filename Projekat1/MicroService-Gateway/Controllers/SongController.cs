@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace MicroService_Gateway.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/songs")]
 public class SongController : ControllerBase
 {
    
