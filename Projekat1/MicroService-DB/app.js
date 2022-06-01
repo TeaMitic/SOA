@@ -15,15 +15,15 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
 app.use('/api/songs', songs)
 
+const port  = process.env.PORT || 5000
 
-
-// const dbURI = 'mongodb+srv://soa-projekat1:SOAProjekat1@soa-projekat1.0os6d.mongodb.net/SongsDB?retryWrites=true&w=majority'; //atlas - cloud mongodb instance
-const dbURI = 'mongodb://localhost:27017/soa-songs' //local mongodb instance 
+const dbURI = 'mongodb+srv://soa-projekat1:SOAProjekat1@soa-projekat1.0os6d.mongodb.net/SongsDB?retryWrites=true&w=majority'; //atlas - cloud mongodb instance
+// const dbURI = 'mongodb://192.168.1.199:27017/soa-songs' //local mongodb instance 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) =>{
     console.log('Mongo instance is running.');
-    app.listen(5000,() => {
-      console.log('Server is listening on port 5000...');
-    });
   })
   .catch((err) => console.log(err));
+app.listen(port,() => {
+  console.log(`Server is listening on port ${port}...`);
+});

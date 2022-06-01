@@ -1,7 +1,4 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -9,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Projekat1/MicroService-Gateway/bin/Debug/net6.0/MicroService-Gateway.dll",
+            "program": "${workspaceFolder}/bin/Debug/net6.0/MicroService-Gateway.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Projekat1/MicroService-Gateway",
+            "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -28,6 +25,15 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "name": "Docker .NET Core Launch",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "netCore": {
+                "appProject": "${workspaceFolder}/MicroService-Gateway.csproj"
+            }
         }
     ]
 }
