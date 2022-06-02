@@ -19,5 +19,5 @@ services:
       - 5170:5170
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    links:
-      - microservice-db
+    volumes:
+      - ./SongsDataset:/usr/share/songs:ro 

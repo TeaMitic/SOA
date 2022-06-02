@@ -40,7 +40,8 @@ public class SongController : ControllerBase
                 return StatusCode(400, "Error: Chunk size must be positive number");
 
             }
-            bool result = await _songService.LoadFromCSV("..\\SongsDataset\\top50.csv",chunkSize);
+            string filepath = "../usr/share/songs/top50.csv"; //"..\\SongsDataset\\top50.csv" for non docker
+            bool result = await _songService.LoadFromCSV(filepath,chunkSize);
             if (result) 
             {
                 return StatusCode(200,"Loaded into db.");
