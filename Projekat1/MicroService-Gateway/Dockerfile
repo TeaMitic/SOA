@@ -4,6 +4,7 @@ EXPOSE 5170
 
 ENV ASPNETCORE_URLS=http://+:5170
 ENV ASPNETCORE_ENVIRONMENT=Development
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["MicroService-Gateway.csproj", "./"]

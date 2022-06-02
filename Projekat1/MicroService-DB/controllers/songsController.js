@@ -113,7 +113,7 @@ const EditOne = async (req,res) => {
 
 const GetOne = async (req,res)=>{
     try {
-
+        console.log("HIT");
         let result = await Song.findOne({trackName : req.params.track , artistName: req.params.artist})
         let sendInfo= ""
 

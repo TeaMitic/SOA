@@ -91,6 +91,7 @@ namespace MicroService_Gateway.Services
                 var response = await _client.ExecuteGetAsync<Song>(request); //need refactoring 
                 if (!response.IsSuccessful)
                 {
+                    Console.WriteLine(response.ToString());
                     if (response.ResponseStatus == ResponseStatus.None) 
                     {
                         throw response.ErrorException;
