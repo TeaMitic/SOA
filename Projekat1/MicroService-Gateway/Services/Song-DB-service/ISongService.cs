@@ -5,6 +5,7 @@ namespace MicroService_Gateway.Services
 { 
     public interface ISongService 
     {
+        Task<IList<Song?>> GetSongs(int limit);
         Task<Song?> GetOneAsync(string artist, string track);
         Task<bool> EditOneAsync(EditSong updateSong);
         Task<bool> DeleteOneAsync(string artist, string track);

@@ -129,12 +129,30 @@ const GetOne = async (req,res)=>{
     }
 }
 
+const GetSongs = async (req,res) => { 
+    try {
+        let result = await Song.find().limit(req.params.limit)
+        let sendInfo= ""
+
+        if(!result){
+            sendInfo = "Error: Songs not found"
+            return res.status(400).send(sendInfo)
+        }
+        sendInfo = "Songs successfully found"
+        res.status(200).send(result)
+
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
+
 module.exports ={
     AddOne,
     AddMany,
     GetOne,
     DeleteOne,
     EditOne,
-    DeleteAll
+    DeleteAll,
+    GetSongs
 }
 

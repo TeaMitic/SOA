@@ -1,0 +1,30 @@
+version: '3.8'
+
+name: 'soa-projekat-1-2'
+services:
+  service-db:
+    image: microservicedb
+    build: ./MicroService-DB
+    environment:
+      NODE_ENV: production
+    ports:
+      - 5000:5000
+  service-gateway:
+    image: microservicegateway
+    build: ./MicroService-Gateway
+    environment:
+      ASPNETCORE_ENVIRONMENT: development
+    ports:
+      - 5170:5170
+    volumes:
+      - ./Datasets:/home/datasets:ro
+  # mongo:
+  #   image: 'mongo'
+  #   volumes:
+  #     - ./MicroService-DB:/data/ mongo
+  #   ports:
+  #     - '27017:27017'
+# volumes:
+#   datasets:
+#     name: soa-datasets
+    

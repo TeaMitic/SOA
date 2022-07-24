@@ -21,6 +21,8 @@ public class SongController : ControllerBase
         _lyricsService = lyricsService;
     }
 
+
+
     /// <summary> 
     /// Loads songs in database from csv file.
     /// </summary>
@@ -40,7 +42,8 @@ public class SongController : ControllerBase
                 return StatusCode(400, "Error: Chunk size must be positive number");
 
             }
-            bool result = await _songService.LoadFromCSV("..\\SongsDataset\\top50.csv",chunkSize);
+            // bool result = await _songService.LoadFromCSV("..\\SongsDataset\\top50.csv",chunkSize); //non docker 
+            bool result = await _songService.LoadFromCSV("/home/datasets/Songs/top50.csv",chunkSize); //docker 
             if (result) 
             {
                 return StatusCode(200,"Loaded into db.");
@@ -53,6 +56,42 @@ public class SongController : ControllerBase
             return StatusCode(500,ex.Message);            
         }
     }
+
+    /// <summary>
+    /// Gets songs from database lyrics. 
+    /// </summary>
+    /// <returns></returns>
+    /// <param name="limit">Limit on number of songs being returned.</param>
+    /// <response code="200">Returns song with or without lyrics.</response>
+    /// <response code="400">Some parameter is null or song does not exist in database.</response>
+    /// <response code="500">Informs that server error occured during getting the song.</response>
+    [HttpGet]
+    [Route("GetSongs/{limit}")]
+    public async Task<IActionResult> GetSongs([FromRoute] int limit=5) 
+    {
+        try
+        {
+            IList<Song?> songs = await _songService.GetSongs(limit);
+            if (songs == null) 
+            { 
+                return StatusCode(400,"Error: Songs not found."); //refactor: message is sent from other microservice
+            }
+            IList<SongAndLyrics> songsWithLyrics = new List<SongAndLyrics>();
+            foreach (Song? song in songs)
+            {
+                if (song == null) continue;
+                LyricsForSong? lyrics = await _lyricsService.GetLyricsAsync(song.ArtistName,song.TrackName);
+                SongAndLyrics? songLyr = new SongAndLyrics(song,lyrics);
+                songsWithLyrics.Add(songLyr);
+            }
+
+            return StatusCode(200,songsWithLyrics);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500,ex.Message);    
+        }
+    } 
     
     /// <summary> 
     /// Gets one song.

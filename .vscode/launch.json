@@ -28,6 +28,26 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "name": "Docker Node.js Launch",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "platform": "node",
+            "node": {
+                "package": "${workspaceFolder}/Projekat1/MicroService-DB/package.json",
+                "localRoot": "${workspaceFolder}/Projekat1/MicroService-DB"
+            }
+        },
+        {
+            "name": "Docker .NET Core Launch",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "netCore": {
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
+            }
         }
     ]
 }

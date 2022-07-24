@@ -10,10 +10,11 @@ namespace MicroService_Gateway.Services
         public LyricsService() { 
             _client = new RestClient(ApiUrls.LYRICS_URL);
         }
-        public async Task<LyricsForSong?> GetLyricsAsync(string artist, string track)
+        public async Task<LyricsForSong?> GetLyricsAsync(string? artist, string? track)
         {
             try
             {
+                if (artist == null || track == null) return null;
                 var request = new RestRequest($"{artist}/{track}");
                 var response = await _client.ExecuteGetAsync<LyricsForSong>(request);
                 if (!response.IsSuccessful)

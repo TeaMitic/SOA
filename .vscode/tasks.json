@@ -36,6 +36,79 @@
                 "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build",
+            "platform": "node",
+            "dockerBuild": {
+                "dockerfile": "${workspaceFolder}/Projekat1/MicroService-DB/Dockerfile",
+                "context": "${workspaceFolder}/Projekat1/MicroService-DB",
+                "pull": true
+            },
+            "node": {
+                "package": "${workspaceFolder}/Projekat1/MicroService-DB/package.json"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: release",
+            "dependsOn": [
+                "docker-build: release"
+            ],
+            "dockerRun": {
+                "os": "Windows"
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: debug",
+            "dependsOn": [
+                "docker-build: debug"
+            ],
+            "dockerRun": {
+                "os": "Windows"
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj",
+                "enableDebugging": true
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: debug",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "soa:dev",
+                "target": "base",
+                "dockerfile": "${workspaceFolder}/Projekat1/MicroService-Gateway/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: release",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "soa:latest",
+                "dockerfile": "${workspaceFolder}/Projekat1/MicroService-Gateway/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
+            }
         }
     ]
 }

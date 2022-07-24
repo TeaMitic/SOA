@@ -99,6 +99,10 @@ const options ={
                ArtistName:{
                     type: "string",
                     description: "Artist name of a song"
+               },
+               Limit:{
+                type: "number",
+                description: "Number of songs requested"
                }
            }
        },

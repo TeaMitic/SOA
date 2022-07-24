@@ -106,7 +106,28 @@ namespace MicroService_Gateway.Services
             }
         }
 
-       
+        public async  Task<IList<Song?>> GetSongs(int limit)
+        {
+             try
+            {
+                var request = new RestRequest($"get/{limit}");
+                var response = await _client.ExecuteGetAsync<IList<Song>>(request); //need refactoring 
+                if (!response.IsSuccessful)
+                {
+                    if (response.ResponseStatus == ResponseStatus.None) 
+                    {
+                        throw response.ErrorException;
+                    }
+                    return null;   
+                }
+                return response.Data;
+                
+            }
+            catch (Exception ex)
+            {    
+                throw ex;
+            }
+        }
 
         public async Task<bool> LoadFromCSV(string filename,int chunkSize)
         {

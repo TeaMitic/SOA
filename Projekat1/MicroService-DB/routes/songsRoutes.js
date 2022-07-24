@@ -7,6 +7,7 @@ const{
     DeleteOne,
     EditOne,
     GetOne,
+    GetSongs,
     DeleteAll
 
 } = require('../controllers/songsController')
@@ -46,6 +47,37 @@ const{
  *      description: Get a song by track name and artist name
  */
 router.get('/get/:artist/:track', GetOne)
+
+/**
+ * @swagger
+ * /api/songs/get/{limit}:
+ *    get:
+ *      summary: Returns limited number of songs
+ *      parameters:
+ *          - in:  path
+ *            name: limit
+ *            schema:
+ *               $ref: "#components/schemas/Limit"
+ *            required: true
+ *            description: Limit on number of songs being returned
+ *          
+ *      responses: 
+ *           200: 
+ *                description: Songs are obtained
+ *                content:
+ *                     application/json:
+ *                       schema:
+ *                           $ref: "#components/schemas/Song"
+ *           400: 
+ *               description: Songs not found
+ *           
+ *           500:
+ *               description: Server error
+ *          
+ *       
+ *      description: Gets limited number of songs 
+ */
+router.get('/get/:limit',GetSongs)
 
 /**
  * @swagger

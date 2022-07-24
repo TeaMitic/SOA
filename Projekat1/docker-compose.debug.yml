@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  microservicedb:
+    image: microservicedb
+    build:
+      context: ./MicroService-DB
+      dockerfile: ./MicroService-DB/Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 5000:5000
+      - 9229:9229
+    command: ["node", "--inspect=0.0.0.0:9229", "app.js"]
+  microservicegateway:
+    image: microservicegateway
+    build:
+      context: .
+      dockerfile: Projekat1/MicroService-Gateway/Dockerfile
+    ports:
+      - 5170:5170
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:c:\remote_debugger:rw
