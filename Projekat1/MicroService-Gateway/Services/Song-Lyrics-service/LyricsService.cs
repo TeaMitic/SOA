@@ -8,7 +8,7 @@ namespace MicroService_Gateway.Services
     {
         private readonly RestClient _client;
         public LyricsService() { 
-            _client = new RestClient(ApiUrls.LYRICS_URL);
+            _client = new RestClient(ServiceUrls.LYRICS_URL);
         }
         public async Task<LyricsForSong?> GetLyricsAsync(string? artist, string? track)
         {

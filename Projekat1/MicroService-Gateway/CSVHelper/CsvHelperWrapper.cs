@@ -3,6 +3,7 @@ using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
 using MicroService_Gateway.Models;
+using MicroService_Gateway.DTO;
 
 namespace MicroService_Gateway.CSVWrapper
 { 
@@ -11,6 +12,7 @@ namespace MicroService_Gateway.CSVWrapper
     { 
         private string fileName;
         private CsvConfiguration csvConfiguration;
+        public bool Eof { get; set; }
 
         public CsvHelperWrapper(string filename) 
         { 
@@ -24,15 +26,15 @@ namespace MicroService_Gateway.CSVWrapper
 
         }
 
-        public  IList<Song> ReadMoreRecords(int numOfLoaded, int chunkSize,ref bool  eof) 
+        public IList<T> ReadMoreRecords<T,TMap>(int numOfLoaded, int chunkSize)  where TMap : ClassMap 
         { 
             try
             {
-                IList<Song> songs = new List<Song> ();
+                IList<T> list = new List<T> ();
                 using (var reader = new StreamReader(this.fileName))
                 using (var csv = new CsvReader(reader, this.csvConfiguration)) 
                 { 
-                    csv.Context.RegisterClassMap<SongClassMap>();
+                    csv.Context.RegisterClassMap<TMap>();
                     csv.Read();
                     csv.ReadHeader();
                     for(int i = 0; i < numOfLoaded; i++) 
@@ -41,19 +43,19 @@ namespace MicroService_Gateway.CSVWrapper
                         csv.GetRecord<Song>();
 
                     }
-                    while (songs.Count() < chunkSize ) 
+                    while (list.Count() < chunkSize ) 
                     { 
                         if (! csv.Read()) 
                         {
-                            eof = true;
+                            this.Eof = true;
                             break;
                         }
-                        var oneSong = csv.GetRecord<Song>();
-                        songs.Add(oneSong);
+                        var oneItem = csv.GetRecord<T>();
+                        list.Add(oneItem);
 
                     }  
                 }
-                return songs;
+                return list;
                 
             }
             catch (Exception ex)

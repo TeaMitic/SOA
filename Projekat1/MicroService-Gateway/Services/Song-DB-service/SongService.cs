@@ -11,7 +11,7 @@ namespace MicroService_Gateway.Services
     {
         private readonly RestClient _client;
         public SongService() { 
-            _client = new RestClient(ApiUrls.DB_URL);
+            _client = new RestClient(ServiceUrls.DB_URL);
         }
         public async Task<bool> AddOneAsync(Song song)
         {
@@ -137,11 +137,11 @@ namespace MicroService_Gateway.Services
                 int numOfsongsLoaded = 0;
                 int songsLeft = -1;
                 bool successfull = false;
-                bool eof = false;
                 IList<Song> songsLoadedInChunk = new List<Song>();
-                while (!eof) 
+                while (!csvWrapper.Eof) 
                 { 
-                    songsLoadedInChunk = csvWrapper.ReadMoreRecords(numOfsongsLoaded,chunkSize, ref eof);
+                    
+                    songsLoadedInChunk = csvWrapper.ReadMoreRecords<Song,SongClassMap>(numOfsongsLoaded,chunkSize);
                     songsLeft = songsLoadedInChunk.Count();
                     numOfsongsLoaded += songsLeft;
                     //db service call 

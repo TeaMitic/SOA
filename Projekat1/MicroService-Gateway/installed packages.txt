@@ -2,3 +2,4 @@ HTTP REPL => dotnet tool install -g Microsoft.dotnet-httprepl
 CsvHelper => dotnet add package CsvHelper 
 RestSharp => dotnet add package RestSharp
 Newtonsoft.Json => dotnet add package Newtonsoft.Json 
+MQTTnet => dotnet add package MQTTnet --version 4.0.2.221
