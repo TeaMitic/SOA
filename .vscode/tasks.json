@@ -60,7 +60,7 @@
                 "os": "Windows"
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/Projekat1/MicroService-Analytics/MicroService-Analytics.csproj"
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
             }
         },
         {
@@ -73,7 +73,7 @@
                 "os": "Windows"
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/Projekat1/MicroService-Analytics/MicroService-Analytics.csproj",
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj",
                 "enableDebugging": true
             }
         },
@@ -86,12 +86,12 @@
             "dockerBuild": {
                 "tag": "soa:dev",
                 "target": "base",
-                "dockerfile": "${workspaceFolder}/Projekat1/MicroService-Analytics/Dockerfile",
+                "dockerfile": "${workspaceFolder}/Projekat1/MicroService-Gateway/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/Projekat1/MicroService-Analytics/MicroService-Analytics.csproj"
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
             }
         },
         {
@@ -102,12 +102,12 @@
             ],
             "dockerBuild": {
                 "tag": "soa:latest",
-                "dockerfile": "${workspaceFolder}/Projekat1/MicroService-Analytics/Dockerfile",
+                "dockerfile": "${workspaceFolder}/Projekat1/MicroService-Gateway/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/Projekat1/MicroService-Analytics/MicroService-Analytics.csproj"
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
             }
         }
     ]

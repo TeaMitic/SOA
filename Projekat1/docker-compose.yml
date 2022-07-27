@@ -12,19 +12,12 @@ services:
   service-gateway:
     image: microservicegateway
     build: ./MicroService-Gateway
-    depends_on:
-      - mqtt
     environment:
       ASPNETCORE_ENVIRONMENT: development
     ports:
       - 5170:5170
     volumes:
       - ./Datasets:/home/datasets:ro
-  service-analytics:
-    image: microserviceanalytics
-    build: ./MicroService-analytics
-    depends_on:
-      - mqtt
   mqtt:
     container_name: mqtt
     image: eclipse-mosquitto
@@ -34,16 +27,13 @@ services:
     ports:
       - 1883:1883
       - 9001:9001
-  kuiper:
-    container_name: kuiper
-    image: lfedge/ekuiper:1.5.1-alpine
-    restart: always
-    ports:
-      - 9081:9081
-  kuiperManager:
-    container_name: kuiperManager
-    image: emqx/ekuiper-manager:1.5
-    restart: always
-    ports:
-      - 9082:9082
+  # mongo:
+  #   image: 'mongo'
+  #   volumes:
+  #     - ./MicroService-DB:/data/ mongo
+  #   ports:
+  #     - '27017:27017'
+# volumes:
+#   datasets:
+#     name: soa-datasets
     

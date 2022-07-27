@@ -1,10 +1,10 @@
+// using MicroService_Gateway.CSV;
 using Microsoft.AspNetCore.Mvc;
 using MicroService_Gateway.Services;
 using MicroService_Gateway.Models;
 using MicroService_Gateway.DTO;
 using Newtonsoft.Json;
 using MicroService_Gateway.CSVWrapper;
-using MicroService_Gateway.MQTT;
 
 namespace MicroService_Gateway.Controllers;
 
@@ -206,34 +206,25 @@ public class SongController : ControllerBase
     /// <response code="500">Informs that server error occured during generating the data.</response>
     [HttpPost]
     [Route("GenerateData")]
-    public async Task<IActionResult> GenerateData()
+    public IActionResult GenerateData()
     {
         try
         {  
-           
+             
             CsvHelperWrapper csvWrapper = new CsvHelperWrapper("/home/datasets/Agriculture/Crop_recommendation.csv");
             int numOfItemsLoaded = 0;
-            Agriculture? crop;
-            using ( var mqttClient = new MQTTService()) 
+            Agriculture? crop = null;
+            while (!csvWrapper.Eof)
             {
-                while (!csvWrapper.Eof)
-                {
-                    crop =  csvWrapper.ReadMoreRecords<Agriculture?,AgricultureClassMap>(numOfItemsLoaded,1).FirstOrDefault();
-                    if (crop == null) 
-                    {
-                        break;
-                    }
-                    numOfItemsLoaded++;
+                crop =  csvWrapper.ReadMoreRecords<Agriculture?,AgricultureClassMap>(numOfItemsLoaded,1).First();
+                numOfItemsLoaded++;
 
-                    //sending via MQTT 
-                    Console.WriteLine(JsonConvert.SerializeObject(crop));
-                    //simulating the time gap in sensoring the data 
-                    await mqttClient.PublishEvent("analytics/agriculture",crop); 
-                    //Thread.Sleep(5000); 
+                //sending via MQTT 
+                Console.WriteLine(JsonConvert.SerializeObject(crop));
+                //simulating the time gap in sensoring the data 
+                // Thread.Sleep(1500); 
 
-                }
-            } 
-            
+            }
             return StatusCode(200,"Generating data finished.");
         }
         catch (Exception ex)

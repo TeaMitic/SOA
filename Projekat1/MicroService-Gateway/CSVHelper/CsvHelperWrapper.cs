@@ -40,7 +40,7 @@ namespace MicroService_Gateway.CSVWrapper
                     for(int i = 0; i < numOfLoaded; i++) 
                     {
                         csv.Read();
-                        csv.GetRecord<T>();
+                        csv.GetRecord<Song>();
 
                     }
                     while (list.Count() < chunkSize ) 
