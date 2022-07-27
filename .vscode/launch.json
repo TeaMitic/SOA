@@ -46,7 +46,7 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/Projekat1/MicroService-Gateway/MicroService-Gateway.csproj"
+                "appProject": "${workspaceFolder}/Projekat1/MicroService-Analytics/MicroService-Analytics.csproj"
             }
         }
     ]
