@@ -201,12 +201,13 @@ public class SongController : ControllerBase
     /// <summary>
     /// Generate data from csv file to mock iot sensor for agriculture data
     /// </summary>
+    /// <param name="sleepSeconds">Time gap between two sensor readings</param>
     /// <returns></returns>
     /// <response code="200">Informs that data is being generated.</response>
     /// <response code="500">Informs that server error occured during generating the data.</response>
     [HttpPost]
-    [Route("GenerateData")]
-    public async Task<IActionResult> GenerateData()
+    [Route("GenerateData/{sleepSeconds}")]
+    public async Task<IActionResult> GenerateData([FromRoute] int sleepSeconds)
     {
         try
         {  
@@ -229,7 +230,7 @@ public class SongController : ControllerBase
                     Console.WriteLine(JsonConvert.SerializeObject(crop));
                     //simulating the time gap in sensoring the data 
                     await mqttClient.PublishEvent("analytics/agriculture",crop); 
-                    //Thread.Sleep(5000); 
+                    Thread.Sleep(sleepSeconds*1000); 
 
                 }
             } 

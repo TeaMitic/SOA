@@ -57,6 +57,8 @@ namespace MicroService_Analytics.MQTT
 
         public async Task SubscribeTopic(string topicName) 
         {
+            if (!_mqttClient.IsConnected)
+				await Connect();
             var mqttSubscribeOptions = _mqttFactory.CreateSubscribeOptionsBuilder()
                 .WithTopicFilter(f => { f.WithTopic(topicName); })
                 .Build();
