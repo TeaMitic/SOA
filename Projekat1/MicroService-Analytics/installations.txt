@@ -1,0 +1,1 @@
+grpc tools: dotnet add package Grpc.Tools --version 2.47.0

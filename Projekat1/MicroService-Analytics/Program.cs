@@ -25,9 +25,9 @@ internal class Program
                     if (e.ApplicationMessage.Topic == "analytics/agriculture")
                     {
                         //send data to ekuiper
-                        var paylaod = e.ApplicationMessage.Payload;
-                        var data = Encoding.Default.GetString(paylaod);
-                        Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions);
+                        var paylaod = e.ApplicationMessage.Payload; // u payload se nalazi data
+                        var data = Encoding.Default.GetString(paylaod); //pretvaranje byte u string - dekodiranje podataka - data je jedan string
+                        Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions); //dobijanje podataka u konkretan objekat
                         await mqttClient.PublishEvent("analytics/data",agr);
                     }
                     else if (e.ApplicationMessage.Topic == "analytics/alerts") 

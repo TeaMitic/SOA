@@ -25,6 +25,14 @@ services:
     build: ./MicroService-analytics
     depends_on:
       - mqtt
+      - service-notif
+  service-notif:
+    image: microservicenotif
+    build: ./MicroService-Notif
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8085:8085
   mqtt:
     container_name: mqtt
     image: eclipse-mosquitto
