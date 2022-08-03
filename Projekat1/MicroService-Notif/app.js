@@ -5,7 +5,7 @@ const grpcObject = grpc.loadPackageDefinition(packageDef)
 const notification = grpcObject.notification;
 
 const server = new grpc.Server();
-server.bind("notification:8085", grpc.ServerCredentials.createInsecure())
+server.bind("0.0.0.0:8085", grpc.ServerCredentials.createInsecure())
 server.addService(notification.Notification.service,
     {
         "sendNotif": sendNotif
