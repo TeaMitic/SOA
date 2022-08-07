@@ -1,5 +1,3 @@
-using System.Text.Json;
-using MicroService_Gateway.DTO;
 using MQTTnet;
 using MQTTnet.Client;
 
@@ -7,15 +5,12 @@ namespace MicroService_Gateway.MQTT
 {
     public interface IMQTTService 
     {
-        Task PublishEvent(string topicName, Agriculture agr);
+        Task PublishEvent(string topicName, string payload);
     }
     public class MQTTService : IMQTTService, IDisposable 
     {
         private IMqttClient _mqttClient;
-        private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
-		{
-			PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-		};
+       
         public MQTTService() 
         {
             var mqttFactory = new MqttFactory();
@@ -26,13 +21,14 @@ namespace MicroService_Gateway.MQTT
             _mqttClient.Dispose();
         }
 
-        public async Task PublishEvent(string topicName, Agriculture agr)
+        public async Task PublishEvent(string topicName, string payload)
         {
+            
             if (!_mqttClient.IsConnected)
 				await Connect();
             var applicationMessage = new MqttApplicationMessageBuilder()
                     .WithTopic(topicName)
-                    .WithPayload(JsonSerializer.Serialize(agr,_jsonSerializerOptions))
+                    .WithPayload(payload)
                     .Build();
 
             await _mqttClient.PublishAsync(applicationMessage, CancellationToken.None);

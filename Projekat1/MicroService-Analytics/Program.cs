@@ -12,7 +12,7 @@ using InfluxDB.Client.Writes;
 
 internal class Program
 {
-
+   
     private static async Task Main(string[] args)
     {
         try 
@@ -31,19 +31,19 @@ internal class Program
                     if (e.ApplicationMessage.Topic == "analytics/agriculture")
                     {
                         //send data to ekuiper
-                        var paylaod = e.ApplicationMessage.Payload; // u payload se nalazi data
-                        var data = Encoding.Default.GetString(paylaod); //pretvaranje byte u string - dekodiranje podataka - data je jedan string
-                        Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions); //dobijanje podataka u konkretan objekat
-                        await mqttClient.PublishEvent("analytics/data",agr);
+                        var payload = e.ApplicationMessage.Payload; // u payload se nalazi data
+                        var data = Encoding.Default.GetString(payload); //pretvaranje byte u string - dekodiranje podataka - data je jedan string
+                        await mqttClient.PublishEvent("analytics/data",data);
                     }
                     else if (e.ApplicationMessage.Topic == "analytics/alerts") 
                     {
                         //send data to notification service via GRPC and persist to influx db
-                        var paylaod = e.ApplicationMessage.Payload;
-                        var data = Encoding.Default.GetString(paylaod);
-                        Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions);
-                        Console.WriteLine(agr.Temperature);
                         Console.WriteLine("Kuiper detected bad soil health.");
+                        var payload = e.ApplicationMessage.Payload;
+                        var data = Encoding.Default.GetString(payload).Replace('[',' ').Replace(']',' ').Trim();
+                        Console.WriteLine(data);
+                        Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions);
+
                         //persisting data into influxdb
                         // const string token = "b37i9XrzhdyD5vjZt0UmlLRIi4ROki4slLcPPnoaXK5lQWr6ex2HDdKKbBogh9cc1DwFXclWT-kwii2wFbWM7w==";
                         // const string bucket = "analytics-bucket";
