@@ -1,4 +1,4 @@
-Soil Moisture,Temperature, Soil Humidity,Time,Air temperature (C),Wind speed (Km/h),Air humidity (%),Wind gust (Km/h),Pressure (KPa),ph,rainfall,N,P,K,Status
+soilMoisture,temperature,soilHumidity,time,airTemperature,windSpeed,airHumidity,windGust,pressure,ph,rainfall,nitrogen,phosphorus,potassium,status
 54,22,70,21,19.52,2.13,55.04,6.3,101.5,6.502985292,202.9355362,90,42,43,ON
 12,20,40,104,19.49,2.01,55.17,10.46,101.5,7.038096361,226.6555374,85,58,41,OFF
 34,26,35,62,19.47,1.9,55.3,14.63,101.51,7.840207144,263.9642476,60,55,44,ON

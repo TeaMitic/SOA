@@ -1,12 +1,12 @@
 const mqtt = require('mqtt') 
-const mqttClient = mqtt.connect("mqtt://mqtt-edgex:1883/")
+let mqttClient = mqtt.connect('mqtt://mqtt-edgex:1883')
 const axios = require('axios')
+let dataTopic = 'agriculture/data'
 
-let dataTopic = 'environment-data'
 mqttClient.on('connect', () => { 
     mqttClient.subscribe(dataTopic, (err, granted) => { 
       if(err) console.log('Error while subscribing to ', dataTopic, 'err')
-      else console.log('Mqtt client subscribed ', dataTopic ,'topic')
+      else console.log(`Mqtt client subscribed to '${dataTopic}' topic`)
     })
   })
   
@@ -33,6 +33,8 @@ mqttClient.on("offline", function() {
 mqttClient.on('message', async (topic, binMessage, packet) => { //binMessage == Binary message 
 if (topic === dataTopic) { 
     console.log("New message.")
+    console.log(binMessage)
+    console.log(packet)
     //convert message
     //check for irregular data
     //send command if irregular data detected

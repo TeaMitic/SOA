@@ -1,6 +1,7 @@
 kopirati vrednost id-ja bez "" 
-humidity sensor => "e231a88a-4870-4011-b8d4-935b5e881cbe" 
-air temperature sensor => "4e66a07f-d0ec-4d15-8bab-ca6cff01468d"
-device profile response after update api => "05598a2a-459e-487c-9c33-52bfc475fc72"
-after device is created => "74def781-d644-4d4b-9900-1e665d814948"
+!Note - ovo su vrednosti generisane na jednom racunaru, nisu uvek iste 
+humidity sensor => "413a28e8-5057-41bf-9f8c-f859538af6e5" 
+air temperature sensor => "1d97d7e2-dad9-4e17-bcf0-2a1912e2adb5"
+device profile response after update api => "accfa356-0e17-4f4d-ac24-658755070295"
+after device is created => "625ff260-0f5d-4a95-a891-0725590c0f03"
 Temp_and_Humidity_sensor_cluster_01 je name uredjaja
