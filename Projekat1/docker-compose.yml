@@ -54,4 +54,13 @@ services:
     restart: always
     ports:
       - 9082:9082
-    
+  influxdb:
+    container_name: influxdb
+    image: influxdb:latest
+    restart: always
+    ports:
+      - 8086:8086  
+    volumes: 
+      - ./influxdb/data:/var/lib/influxdb
+      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ./influxdb/init:/docker-entrypoint-initdb.d  

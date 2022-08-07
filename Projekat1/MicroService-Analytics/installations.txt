@@ -1,1 +1,5 @@
-grpc tools: dotnet add package Grpc.Tools --version 2.47.0
+grpc: dotnet add package Grpc.Tools --version 2.47.0
+    fale jos dva
+influxdb:
+    dotnet add package InfluxDB.Client
+    dotnet add package Coravel

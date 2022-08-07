@@ -1,6 +1,9 @@
 syntax = "proto3";
 
-package notification;
+option csharp_namespace = "GrpcClient";
+
+package notif;
+
 
 service Notification{
     rpc sendNotif(Notif) returns (Response);
