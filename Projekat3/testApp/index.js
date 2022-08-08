@@ -7,16 +7,25 @@ app.use(express.urlencoded({extended:false}))
 let waterPumpWorking = false
 
 app.put("/api/waterPump", (req, res) => {
-    waterPumpWorking = req.body.working
-    if(waterPumpWorking) console.log("Water pump started working.")
-    else if (!waterPumpWorking) console.log("Water pump stopped working.")
-    else { res.sendStatus(400); return }
-    res.sendStatus(201)
+    if (req.body.working !== undefined) { 
+        waterPumpWorking = req.body.working
+        let pumpState = waterPumpWorking ? "started" : "stopped"
+        let msg = `Water pump ${pumpState} working.`
+        console.log(`PUT ACTION: ${msg}`)
+        return res.status(200).send(msg)
+    }
+    return res.status(400).send("Argument 'working' not found!");
+    
 })
 
 app.get("/api/waterPump", (req, res) => {
     let pumpState = waterPumpWorking ? "working" : "not working"
-    res.status(200).send(`Water pump is ${pumpState}.`)
+    let msg = `Water pump is ${pumpState}.`
+    console.log(`GET ACTION: ${msg}`)
+    res.status(200).send({
+        working: waterPumpWorking,
+        message: msg
+    })
 })
 
 port = 8088

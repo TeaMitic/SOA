@@ -58,8 +58,8 @@ services:
       - mqtt-edgex
     networks:
       - edgex-network
-    # ports:
-    #   - 5000:5000
+    ports:
+      - 5000:5000
   mqtt-edgex:
     container_name: mqtt-edgex
     hostname: mqtt-edgex
