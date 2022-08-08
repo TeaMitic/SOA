@@ -39,9 +39,15 @@ internal class Program
                     else if (e.ApplicationMessage.Topic == "analytics/alerts") 
                     {
                         //send data to notification service via GRPC and persist to influx db
+                        Console.WriteLine("usao u alerts if");
                         var paylaod = e.ApplicationMessage.Payload;
+                        Console.WriteLine("napravljen payload");
+                        Console.WriteLine(paylaod);
                         var data = Encoding.Default.GetString(paylaod);
+                        Console.WriteLine("napravljen data");
+                        Console.WriteLine(data);
                         Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions);
+                        Console.WriteLine("napravljen objekat");
                         Console.WriteLine(agr.Temperature);
                         Console.WriteLine("Kuiper detected bad soil health.");
                         //persisting data into influxdb
