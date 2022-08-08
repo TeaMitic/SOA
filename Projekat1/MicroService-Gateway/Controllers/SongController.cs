@@ -5,6 +5,7 @@ using MicroService_Gateway.DTO;
 using Newtonsoft.Json;
 using MicroService_Gateway.CSVWrapper;
 using MicroService_Gateway.MQTT;
+using System.Text.Json;
 
 namespace MicroService_Gateway.Controllers;
 
@@ -227,9 +228,15 @@ public class SongController : ControllerBase
                     numOfItemsLoaded++;
 
                     //sending via MQTT 
-                    Console.WriteLine(JsonConvert.SerializeObject(crop));
+                    JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    };
+                    var payload = System.Text.Json.JsonSerializer.Serialize(crop,_jsonSerializerOptions);
+                    Console.WriteLine(payload);
+                    await mqttClient.PublishEvent("analytics/agriculture",payload); 
+
                     //simulating the time gap in sensoring the data 
-                    await mqttClient.PublishEvent("analytics/agriculture",crop); 
                     Thread.Sleep(sleepSeconds*1000); 
 
                 }

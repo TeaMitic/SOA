@@ -7,7 +7,7 @@ namespace MicroService_Analytics.MQTT
 {
     public interface IMQTTService 
     {
-        Task PublishEvent(string topicName, Agriculture agr);
+        Task PublishEvent(string topicName, string payload);
     }
     public class MQTTService : IMQTTService, IDisposable 
     {
@@ -20,10 +20,7 @@ namespace MicroService_Analytics.MQTT
                 return _mqttClient;
             }
         }
-        private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
-		{
-			PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-		};
+       
         public MQTTService() 
         {
             _mqttFactory = new MqttFactory();
@@ -43,13 +40,13 @@ namespace MicroService_Analytics.MQTT
 
         }
 
-        public async Task PublishEvent(string topicName, Agriculture agr)
+        public async Task PublishEvent(string topicName, string payload)
 		{
 			if (!_mqttClient.IsConnected)
 				await Connect();
 			var applicationMessage = new MqttApplicationMessageBuilder()
 					.WithTopic(topicName)
-					.WithPayload(JsonSerializer.Serialize(agr, _jsonSerializerOptions))
+					.WithPayload(payload)
 					.Build();
 
 			await _mqttClient.PublishAsync(applicationMessage, CancellationToken.None);
