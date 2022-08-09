@@ -37,6 +37,7 @@ internal class Program
                     }
                     else if (e.ApplicationMessage.Topic == "analytics/alerts") 
                     {
+
                         //send data to notification service via GRPC and persist to influx db
                         // Console.WriteLine("usao u alerts if");
                         // var paylaod = e.ApplicationMessage.Payload;
@@ -48,44 +49,55 @@ internal class Program
                         // Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions);
                         // Console.WriteLine("napravljen objekat");
                         // Console.WriteLine(agr.Temperature);
-                        Console.WriteLine("Kuiper detected bad soil health.");
-                        var payload = e.ApplicationMessage.Payload;
-                        var data = Encoding.Default.GetString(payload).Replace('[',' ').Replace(']',' ').Trim();
-                        Console.WriteLine(data);
-                        Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions);
+                        try{
+                            Console.WriteLine("Kuiper detected bad soil health.");
+                            var payload = e.ApplicationMessage.Payload;
+                            var data = Encoding.Default.GetString(payload).Replace('[',' ').Replace(']',' ').Trim();
+                            Console.WriteLine(data);
+                            Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions);
 
-                        //persisting data into influxdb
-                        // const string token = "b37i9XrzhdyD5vjZt0UmlLRIi4ROki4slLcPPnoaXK5lQWr6ex2HDdKKbBogh9cc1DwFXclWT-kwii2wFbWM7w==";
-                        // const string bucket = "analytics-bucket";
-                        // const string org = "organization";
+                            //persisting data into influxdb
+                            const string token = "eSy0_-op61hsHt9jeDdBAYsyy3XR0N4VzyrUwbz0fwPg3muYH_U8Sx5N0ejbYMa-CMTXFf-0UsF8uMwOlqBavg==";
+                            const string bucket = "analytics-bucket";
+                            const string org = "organization";
 
-                        // using var influxClient = InfluxDBClientFactory.Create("http://localhost:8086", token);
-                        // // const string influxData = "mem,host=host1 used_percent=23.43234543";
-                        // // using (var writeApi = influxClient.GetWriteApi())
-                        // // {
-                        // //     writeApi.WriteRecord(bucket,  WritePrecision.Ns, org, influxData); //ovde sam zamenila mesta writePercision i org 
-                        // //     Console.WriteLine("Upisano u bazu");
-                        // // }
-                        // var point = PointData
-                        // .Measurement("mem")
-                        // .Tag("host", "host1")
-                        // .Field("nitrogen", agr.Nitrogen )
-                        // .Field("phosphorus", agr.Phosphorus)
-                        // .Field("potassium", agr.Potassium )
-                        // .Field("temperature", agr.Temperature)
-                        // .Field("humidity", agr.Humidity )
-                        // .Field("ph", agr.Ph)
-                        // .Field("rainfall", agr.Rainfall)
-                        // .Field("cropType", agr.CropType)
-                        // .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
+                            using var influxClient = InfluxDBClientFactory.Create("http://influxdb:8086", token);
+                            // const string influxData = "mem,host=host1 used_percent=23.43234543";
+                            // using (var writeApi = influxClient.GetWriteApi())
+                            // {
+                            //     writeApi.WriteRecord(bucket,  WritePrecision.Ns, org, influxData); //ovde sam zamenila mesta writePercision i org 
+                            //     Console.WriteLine("Upisano u bazu");
+                            // }
+                            
+                            using (var writeApi = influxClient.GetWriteApi())
+                            {
+                            //line protocol
+                                
+                                writeApi.WriteRecord($"analytics-bucket, nitogen={agr.Nitrogen},phosphorous={agr.Phosphorus},potassium={agr.Potassium},temprerature={agr.Temperature},humidity={agr.Humidity},ph={agr.Ph},rainfall={agr.Rainfall},cropType={agr.CropType} DateTime.UtcNow",WritePrecision.Ns, bucket, org);
 
+                            //point data
+                                // var point = PointData
+                                // .Measurement("analytics-bucket")
+                                // // .Tag("host", "analytics")
+                                // .Field("nitrogen", $"{agr.Nitrogen}")
+                                // .Field("phosphorus", $"{agr.Phosphorus}")
+                                // .Field("potassium", $"{agr.Potassium}" )
+                                // .Field("temperature", $"{agr.Temperature}")
+                                // .Field("humidity", $"{agr.Humidity}" )
+                                // .Field("ph", $"{agr.Ph}")
+                                // .Field("rainfall", $"{agr.Rainfall}")
+                                // .Field("cropType", $"{agr.CropType}")
+                                // .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
 
-                        // using (var writeApi = influxClient.GetWriteApi())
-                        // {
-                        //     writeApi.WritePoint(point, org, bucket); //zamenjena mesta bucket i point
-                        // }
-
-
+                                // Console.WriteLine(point.ToString());
+                                // writeApi.WritePoint(point, bucket, org); 
+                            
+                            }
+                        }
+                         catch(Exception ex) 
+                        {
+                            Console.WriteLine(ex);
+                        }
                         //grpc deo
                         // using var channel = GrpcChannel.ForAddress("https://localhost:8085");
                         // var grpcClient = new GrpcClient.Notification.NotificationClient(channel);
