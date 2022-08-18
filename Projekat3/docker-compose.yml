@@ -49,6 +49,13 @@ volumes:
   consul-data:
 
 services:
+  test-app:
+    container_name: test-app
+    build: './testApp'
+    networks:
+      - edgex-network
+    ports:
+      - 8088:8088
   service-monitoring:
     image: microservicemonitoring
     build: ./MicroService-Monitoring
