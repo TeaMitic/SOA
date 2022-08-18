@@ -99,7 +99,7 @@ internal class Program
                                 var httpHandler = new HttpClientHandler();
                                 //Return true to allow certificates that are untrusted/invalid
                                 httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-                                using var channel = GrpcChannel.ForAddress("http://service-notif:8085", new GrpcChannelOptions {HttpHandler = httpHandler});
+                                using var channel = GrpcChannel.ForAddress("https://service-notif:8085", new GrpcChannelOptions {HttpHandler = httpHandler});
                                 // CancellationToken cancellationToken = default(CancellationToken)
                                 var grpcClient = new GrpcClient.Notification.NotificationClient(channel);
                                 var reply =  grpcClient.sendNotif(new Notif {
