@@ -7,7 +7,14 @@ service Notification{
 }
 
 message Notif {
-    string notif = 1;
+    int32 Nitrogen = 1;
+    int32 Phosphorus = 2;
+    int32 Potassium = 3;
+    float Temperature = 4;
+    float Humidity = 5;
+    float Ph = 6;
+    float Rainfall = 7; 
+    string CropType = 8;
 }
 
 message Response {

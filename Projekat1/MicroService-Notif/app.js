@@ -15,10 +15,9 @@ server.bindAsync("0.0.0.0:8085", grpc.ServerCredentials.createInsecure(), () => 
     console.log('grpc server started')
 
 })
-
 function sendNotif(call, callback){
     // console.log("Call:",call)
     // callback(null,  {res:  call.request.notif})
     console.log(`New notification`);
-    console.log("Data",call.request.notif.toString());
+    console.log("Data",call.request);
 }
