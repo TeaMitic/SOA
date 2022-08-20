@@ -59,11 +59,11 @@ internal class Program
                             //persisting data into influxdb
                             // const string token = "eSy0_-op61hsHt9jeDdBAYsyy3XR0N4VzyrUwbz0fwPg3muYH_U8Sx5N0ejbYMa-CMTXFf-0UsF8uMwOlqBavg=="; //tea 
                             // const string token = "ZAZNBrr5QBzgE3BZe6MNbavEWY24iHEnwSEnj_QTmlj166zfdmy7_tdggBo7RjHmEmlyVvHrlgoqqbbfhKE2iQ=="; //dimitrije
-                    // const string token = "eSy0_-op61hsHt9jeDdBAYsyy3XR0N4VzyrUwbz0fwPg3muYH_U8Sx5N0ejbYMa-CMTXFf-0UsF8uMwOlqBavg=="; //tea
-                    // const string bucket = "analytics-bucket";
-                    // const string org = "organization";
+                    const string token = "eSy0_-op61hsHt9jeDdBAYsyy3XR0N4VzyrUwbz0fwPg3muYH_U8Sx5N0ejbYMa-CMTXFf-0UsF8uMwOlqBavg=="; //tea
+                    const string bucket = "analytics-bucket";
+                    const string org = "organization";
 
-                    // using var influxClient = InfluxDBClientFactory.Create("http://influxdb:8086", token);
+                    using var influxClient = InfluxDBClientFactory.Create("http://influxdb:8086", token);
                             // const string influxData = "mem,host=host1 used_percent=23.43234543";
                             // using (var writeApi = influxClient.GetWriteApi())
                             // {
@@ -71,7 +71,7 @@ internal class Program
                             //     Console.WriteLine("Upisano u bazu");
                             // }
                             
-                    // var writeApiAsync = influxClient.GetWriteApiAsync();
+                    var writeApiAsync = influxClient.GetWriteApiAsync();
                             
                             // //line protocol
                             // string record = $"analytics-bucket,nitrogen={agr.Nitrogen} phosphorous={agr.Phosphorus},potassium={agr.Potassium},temprerature={agr.Temperature},humidity={agr.Humidity},ph={agr.Ph},rainfall={agr.Rainfall},cropType={agr.CropType}";
@@ -81,25 +81,25 @@ internal class Program
                             // var response = await writeApiAsync.WriteRecordsAsyncWithIRestResponse(records,WritePrecision.Ns, bucket, org);
 
                     // point data
-                        // PointData point = PointData
-                        // .Measurement("analytics-bucket")
-                        // .Tag("cropType", agr.CropType)
-                        // .Field("ph", agr.Ph)
-                        // .Field("nitrogen", agr.Nitrogen)
-                        // .Field("phosphorus", agr.Phosphorus)
-                        // .Field("potassium", agr.Potassium )
-                        // .Field("temperature", agr.Temperature)
-                        // .Field("humidity", agr.Humidity )
-                        // .Field("rainfall", agr.Rainfall)
-                        // .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
+                        PointData point = PointData
+                        .Measurement("analytics-bucket")
+                        .Tag("cropType", agr.CropType)
+                        .Field("ph", agr.Ph)
+                        .Field("nitrogen", agr.Nitrogen)
+                        .Field("phosphorus", agr.Phosphorus)
+                        .Field("potassium", agr.Potassium )
+                        .Field("temperature", agr.Temperature)
+                        .Field("humidity", agr.Humidity )
+                        .Field("rainfall", agr.Rainfall)
+                        .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
 
                         // Console.WriteLine(point.ToString());
-                        // await writeApiAsync.WritePointAsync(point, bucket, org); 
+                        await writeApiAsync.WritePointAsync(point, bucket, org); 
                                 // grpc deo
                                 var httpHandler = new HttpClientHandler();
                                 //Return true to allow certificates that are untrusted/invalid
                                 httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-                                using var channel = GrpcChannel.ForAddress("https://service-notif:8085", new GrpcChannelOptions {HttpHandler = httpHandler});
+                                using var channel = GrpcChannel.ForAddress("http://service-notif:8085", new GrpcChannelOptions {HttpHandler = httpHandler});
                                 // CancellationToken cancellationToken = default(CancellationToken)
                                 var grpcClient = new GrpcClient.Notification.NotificationClient(channel);
                                 var reply =  grpcClient.sendNotif(new Notif {
@@ -111,7 +111,9 @@ internal class Program
                                     Ph = (float)agr.Ph,
                                     Rainfall = (float)agr.Rainfall,
                                     CropType = agr.CropType
-                                });
+                                },null);
+                                Console.WriteLine( reply);
+                                // "Greeting: " +
                                 // Console.WriteLine("Send notif to notification microsevice" + reply.Res);
                            
                             
