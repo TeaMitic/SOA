@@ -26,8 +26,10 @@ let humidityLowLevel = 30
 let humidityHighLevel = 55
 let humiditySensor = 'humidity'
 
-let pumpApi_get = `http://edgex-core-command:48082/api/v1/device/868a4373-bee9-4e16-9d78-c717cd28edc8/command/82393c25-24e2-41d4-8733-c1cca5862717`
-let pumpApi_put = "http://edgex-core-command:48082/api/v1/device/868a4373-bee9-4e16-9d78-c717cd28edc8/command/82393c25-24e2-41d4-8733-c1cca5862717"
+let pumpApi_get = "http://edgex-core-command:48082/api/v1/device/64cace74-c4e8-4c18-b631-fa88531607ac/command/33f13ffe-b4a5-4527-a0a7-c4fd45e84124" //tea
+let pumpApi_put = "http://edgex-core-command:48082/api/v1/device/64cace74-c4e8-4c18-b631-fa88531607ac/command/33f13ffe-b4a5-4527-a0a7-c4fd45e84124" //tea
+// let pumpApi_get = `http://edgex-core-command:48082/api/v1/device/868a4373-bee9-4e16-9d78-c717cd28edc8/command/82393c25-24e2-41d4-8733-c1cca5862717` //dimitrije
+// let pumpApi_put = "http://edgex-core-command:48082/api/v1/device/868a4373-bee9-4e16-9d78-c717cd28edc8/command/82393c25-24e2-41d4-8733-c1cca5862717" //dimitrije
 // let pumpApi_get = `http://host.docker.internal:8088/api/waterPump`
 // let pumpApi_put = `http://host.docker.internal:8088/api/waterPump`
 

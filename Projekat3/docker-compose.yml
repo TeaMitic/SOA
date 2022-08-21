@@ -47,8 +47,37 @@ volumes:
   log-data:
   consul-config:
   consul-data:
+  grafana_data: {}
+  influxdb_data: {}
 
 services:
+  grafana:
+    image: grafana/grafana:latest
+    networks:
+      - edgex-network
+    ports:
+      - 4200:3000
+    depends_on:
+      - influx
+    links:
+      - influx
+  influx:
+    container_name: influx
+    image: influxdb:latest
+    restart: always
+    ports:
+      - 8087:8086  
+    volumes: 
+      - influxdb_data:/var/lib/influxdb
+  service-visualization:
+    image: microservicevisualization
+    build: './MicroService-Visualization'
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - mqtt-edgex
+    networks:
+      - edgex-network
   test-app:
     container_name: test-app
     build: './testApp'
