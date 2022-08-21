@@ -5,12 +5,13 @@ const {InfluxDB} = require('@influxdata/influxdb-client')
 const {Point} = require('@influxdata/influxdb-client')
 
 //Influxdb setup
-const token = "EIkanKPP4inoos5l9VDcVivClciX2hLWRGpVyicBVhN20_7meTcKGFNvJ3P5XS8dnk6CMKXt1isbh53R8x-GQA=="
+// const token = "EIkanKPP4inoos5l9VDcVivClciX2hLWRGpVyicBVhN20_7meTcKGFNvJ3P5XS8dnk6CMKXt1isbh53R8x-GQA==" //tea
+const token = "tx00pUV-FNoydFo55JAkvR_lJP9dlk7cWwrxV_yT2EL-EfmSJXiiUMsgnYKcua5AnAaW6ykvwIaGgC2Cr0R0mQ==" //dimitrije
 const org = "organization"
 const bucket = "visualization-bucket"
 const influxClient = new InfluxDB({url: 'http://influx:8087', token: token})
 let writeApi = influxClient.getWriteApi(org, bucket)
-writeApi.useDefaultTags({tag: 'default'})
+// writeApi.useDefaultTags({tag: 'default'})
 
 
 
@@ -33,7 +34,7 @@ mqttClient.on('message', async (topic, binMessage, packet) => { //binMessage == 
         try {
             //new sensor reading 
             let reading = JSON.parse(binMessage.toString()).readings[0]
-            const point = new Point('visualization-mes').tag('sensor',reading.name).floatField(reading.name, parseFloat(reading.value))
+            const point = new Point('visualization-bucket').tag('sensor',reading.name).floatField(reading.name, parseFloat(reading.value))
             writeApi.writePoint(point)
             console.log(point)
             //persist to influxdb

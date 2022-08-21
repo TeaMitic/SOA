@@ -49,6 +49,8 @@ volumes:
   consul-data:
   grafana_data: {}
   influxdb_data: {}
+  influxdb_conf: {}
+  influxdb_init: {}
 
 services:
   grafana:
@@ -69,6 +71,8 @@ services:
       - 8087:8086  
     volumes: 
       - influxdb_data:/var/lib/influxdb
+      - influxdb_conf:/etc/influxdb/influxdb.conf:ro
+      - influxdb_init:/docker-entrypoint-initdb.d  
   service-visualization:
     image: microservicevisualization
     build: './MicroService-Visualization'
@@ -76,6 +80,7 @@ services:
       NODE_ENV: production
     depends_on:
       - mqtt-edgex
+      - influx
     networks:
       - edgex-network
   test-app:
