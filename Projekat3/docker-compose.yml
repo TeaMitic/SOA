@@ -61,14 +61,19 @@ services:
       - influx
     links:
       - influx
+    volumes: 
+      - grafana_data:/var/lib/grafana
   influx:
     container_name: influx
     image: influxdb:latest
+    networks:
+      - edgex-network
     restart: always
     ports:
-      - 8087:8086  
+      - 8086:8086  
     volumes: 
       - influxdb_data:/var/lib/influxdb
+
   service-visualization:
     image: microservicevisualization
     build: './MicroService-Visualization'
