@@ -6,7 +6,7 @@ package notif;
 
 
 service Notification{
-    rpc sendNotif(Notif) returns (Response);
+    rpc sendNotif(Notif) returns(Response);
 }
 
 message Notif {
