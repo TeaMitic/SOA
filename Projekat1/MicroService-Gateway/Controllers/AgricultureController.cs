@@ -5,6 +5,7 @@ using MicroService_Gateway.DTO;
 using Newtonsoft.Json;
 using MicroService_Gateway.CSVWrapper;
 using MicroService_Gateway.MQTT;
+using System.Text.Json;
 
 namespace MicroService_Gateway.Controllers;
 
@@ -26,7 +27,7 @@ public class AgricultureController : ControllerBase
     /// <response code="500">Informs that server error occured during generating the data.</response>
     [HttpPost]
     [Route("GenerateData/{sleepSeconds}")]
-    public async Task<IActionResult> GenerateData([FromRoute] int sleepSeconds)
+    public async Task<IActionResult> GenerateData([FromRoute] double sleepSeconds)
     {
         try
         {  
@@ -46,10 +47,14 @@ public class AgricultureController : ControllerBase
                     numOfItemsLoaded++;
 
                     //sending via MQTT 
-                    Console.WriteLine(JsonConvert.SerializeObject(crop));
-                    //simulating the time gap in sensoring the data 
-                    await mqttClient.PublishEvent("analytics/agriculture",crop); 
-                    Thread.Sleep(sleepSeconds*1000); 
+                    JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    };
+                    var payload = System.Text.Json.JsonSerializer.Serialize(crop,_jsonSerializerOptions);
+                    Console.WriteLine(payload);
+                    await mqttClient.PublishEvent("analytics/agriculture",payload); 
+                    Thread.Sleep((int)(sleepSeconds*1000)); 
 
                 }
             } 

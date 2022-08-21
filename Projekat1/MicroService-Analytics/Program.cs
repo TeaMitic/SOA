@@ -28,7 +28,9 @@ internal class Program
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 };
-                //grpc deo
+                //influx config 
+                InfluxWrapper.Configure(false); //setting Dimitrije's token for influx
+
                 //listener for messages from mqtt    
                 mqttClient.Listener.ApplicationMessageReceivedAsync += async (e) =>  {
                     if (e.ApplicationMessage.Topic == "analytics/agriculture")
@@ -61,7 +63,6 @@ internal class Program
                             .Field("rainfall", agr.Rainfall)
                             .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
 
-                            InfluxWrapper.Configure(false); //setting Dimitrije's token for influx
                             await InfluxWrapper.InsertData(point);
 
                             //grpc deo 
