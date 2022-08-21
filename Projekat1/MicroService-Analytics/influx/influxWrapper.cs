@@ -15,6 +15,7 @@ namespace MicroService_Analytics.InfluxDB
         private static InfluxDBClient _client = null;       
 
         public static bool Configure(bool isTeaToken) { 
+            if (_client != null) { return true; }
             var token = isTeaToken? _token_tea : _token_dimitrije;
             _client = InfluxDBClientFactory.Create("http://influxdb:8086", token);                                    
             return true;
