@@ -40,8 +40,6 @@ internal class Program
                     }
                     else if (e.ApplicationMessage.Topic == "analytics/alerts") 
                     {
-
-                        
                         try{
                             Console.WriteLine("Kuiper detected bad soil health.");
                             count++;
@@ -50,8 +48,7 @@ internal class Program
                             Console.WriteLine(data);
                             Agriculture agr = JsonSerializer.Deserialize<Agriculture>(data,_jsonSerializerOptions);
 
-                            // persisting data into influxdb
-                            
+                            // persisting data into influxdb                            
                             PointData point = PointData
                             .Measurement("analytics-bucket")
                             .Tag("cropType", agr.CropType)
@@ -66,10 +63,9 @@ internal class Program
 
                             InfluxWrapper.Configure(false); //setting Dimitrije's token for influx
                             await InfluxWrapper.InsertData(point);
-                            //grpc deo 
-                            Console.WriteLine("Started sending over gRPC");
-                            var grpcClient = gRPCWrapper.GRPCClient;
 
+                            //grpc deo 
+                            var grpcClient = gRPCWrapper.GRPCClient;
                             var responses =  grpcClient.sendNotif(new Notif {
                                 Nitrogen = agr.Nitrogen, 
                                 Phosphorus = agr.Phosphorus, 
@@ -80,7 +76,6 @@ internal class Program
                                 Rainfall = (float)agr.Rainfall,
                                 CropType = agr.CropType
                             },null);  
-                            Console.WriteLine("Finished sending over gRPC");
                         }
                          catch(Exception ex) 
                         {
