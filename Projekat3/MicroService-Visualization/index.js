@@ -5,13 +5,21 @@ const {InfluxDB} = require('@influxdata/influxdb-client')
 const {Point} = require('@influxdata/influxdb-client')
 
 //Influxdb setup
+
 const token = "EIkanKPP4inoos5l9VDcVivClciX2hLWRGpVyicBVhN20_7meTcKGFNvJ3P5XS8dnk6CMKXt1isbh53R8x-GQA=="
 const org = 'organization'
 const bucket = 'visualization-bucket'
 const url = 'http://influx:8086'
 const influxClient = new InfluxDB({url, token})
+
+// const token = "EIkanKPP4inoos5l9VDcVivClciX2hLWRGpVyicBVhN20_7meTcKGFNvJ3P5XS8dnk6CMKXt1isbh53R8x-GQA==" //tea
+// const token = "tx00pUV-FNoydFo55JAkvR_lJP9dlk7cWwrxV_yT2EL-EfmSJXiiUMsgnYKcua5AnAaW6ykvwIaGgC2Cr0R0mQ==" //dimitrije
+// const org = "organization"
+// const bucket = "visualization-bucket"
+// const influxClient = new InfluxDB({url: 'http://influx:8087', token: token})
+
 let writeApi = influxClient.getWriteApi(org, bucket)
-writeApi.useDefaultTags({tag: 'default'})
+// writeApi.useDefaultTags({tag: 'default'})
 
 
 
