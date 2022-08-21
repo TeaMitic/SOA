@@ -48,11 +48,32 @@ volumes:
   consul-config:
   consul-data:
   grafana_data: {}
-  influxdb_data: {}
-  influxdb_conf: {}
-  influxdb_init: {}
+  # influxdb_data: {}
+  # influxdb_conf: {}
+  # influxdb_init: {}
 
 services:
+  service-visualization:
+    image: microservicevisualization
+    build: './MicroService-Visualization'
+    depends_on:
+      - mqtt-edgex
+      - influx
+    networks:
+      - edgex-network
+  influx:
+    container_name: influx
+    image: influxdb:latest
+    restart: always
+    ports:
+      - 8086:8086  
+    networks:
+      - edgex-network
+    volumes: 
+      - ./influxdb/data:/var/lib/influxdb
+      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ./influxdb/init:/docker-entrypoint-initdb.d  
+
   grafana:
     image: grafana/grafana:latest
     networks:
@@ -63,26 +84,6 @@ services:
       - influx
     links:
       - influx
-  influx:
-    container_name: influx
-    image: influxdb:latest
-    restart: always
-    ports:
-      - 8087:8086  
-    volumes: 
-      - influxdb_data:/var/lib/influxdb
-      - influxdb_conf:/etc/influxdb/influxdb.conf:ro
-      - influxdb_init:/docker-entrypoint-initdb.d  
-  service-visualization:
-    image: microservicevisualization
-    build: './MicroService-Visualization'
-    environment:
-      NODE_ENV: production
-    depends_on:
-      - mqtt-edgex
-      - influx
-    networks:
-      - edgex-network
   test-app:
     container_name: test-app
     build: './testApp'

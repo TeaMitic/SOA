@@ -1,10 +1,18 @@
-FROM node:lts-alpine
-ENV NODE_ENV=production
-WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
+FROM mcr.microsoft.com/dotnet/runtime:6.0 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["MicroService-Visualization.csproj", "./"]
+RUN dotnet restore "MicroService-Visualization.csproj"
 COPY . .
-# EXPOSE 5000
-RUN chown -R node /usr/src/app
-USER node
-CMD ["npm", "start"]
+WORKDIR "/src/."
+RUN dotnet build "MicroService-Visualization.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "MicroService-Visualization.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "MicroService-Visualization.dll"]
