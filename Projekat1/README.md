@@ -1,11 +1,16 @@
-Projekat Songs and Lyrics 
-Bazicne CRUD operacije sa pesmama 
-GetOne - Pribavlja pesmu i gadja public api za lyrics 
-AddOne - Dodaje pesmu u bazi (lyrics je na cloud-u)
-EditOne - Vrsi izmenu jedne pesme (lyrics se ne moze promeniti) 
-DeleteOne - Brisanje pesme iz baze
-LoadWithCSV - ucitavanje dataset-a u bazi preko .csv fajla
-
-Pokretanje programa
-Gateway service - cd Projekat1/MicroService-Gateway =>  dotnet run ili dotnet watch za automatsko pokretanje swagger UI 
-DB service - cd Projekat1/MicroService-DB  => npm start 
+<body>
+  <h1>Projekat 1</h1>
+  Aplikacija koja pribavlja podatke o pesmama zajedno sa njihovim tekstovima.
+  Aplikacija radi u docker-u.
+  <ul>Mikroservisi koji se koriste u ovom projektu su:
+    <li>MicroService-Gateway</li>
+    <li>MicroService-DB</li>
+  </ul>
+  <h2>Pokretanje aplikacije</h2>
+   <ul>Koraci za pokretanje prvog projekta:
+    <li>Locirati se u folder ~/Projekat1</li>
+    <li>Izvrsiti komandu <pre>docker compose -f "docker-compose.yml" up -d --build</pre></li>
+    <li>Za pokretanje servisa samo iz projekta 1 izvrsiti komandu <pre>docker compose -f "docker-compose.yml" up -d --build service-gateway service-db</pre></li>
+  </ul>
+  
+</body>
