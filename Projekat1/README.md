@@ -96,7 +96,7 @@
   <ul>Setup initial user
     <li><b>username:</b> <em>admin</em></li>
     <li><b>password:</b> <em>adminadmin</em></li>
-    <li><b>initial organization name:</b> <em>org</em></li>
+    <li><b>initial organization name:</b> <em>organization</em></li>
     <li><b>initial bucket name:</b> <em>bucket</em></li>
   </ul>
   Otvoriti <em>Load Data</em> > <em>Buckets</em>
