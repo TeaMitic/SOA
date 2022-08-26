@@ -6,7 +6,7 @@ const {Point} = require('@influxdata/influxdb-client')
 
 //Influxdb setup
 
-const token = "EIkanKPP4inoos5l9VDcVivClciX2hLWRGpVyicBVhN20_7meTcKGFNvJ3P5XS8dnk6CMKXt1isbh53R8x-GQA=="
+const token = "kf6xvI4Dm7Xsv6O6CfGyOMDY2X1AwyH02rrfeV2GPTAFMzjJJv9f-2_-HbCXtKcGEtDl_Dgl4DMhfKpDKS3dFg=="
 const org = 'organization'
 const bucket = 'visualization-bucket'
 const url = 'http://influx:8086'
