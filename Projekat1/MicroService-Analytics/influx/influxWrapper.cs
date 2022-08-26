@@ -7,7 +7,7 @@ namespace MicroService_Analytics.InfluxDB
 {
     public static class InfluxWrapper 
     {
-        private static string _token_dimitrije = "ZAZNBrr5QBzgE3BZe6MNbavEWY24iHEnwSEnj_QTmlj166zfdmy7_tdggBo7RjHmEmlyVvHrlgoqqbbfhKE2iQ=="; //dimitrije
+        private static string _token_dimitrije = "KcHNxAEasUmzANhbnGClfh6kHZLtcl5rZd1CaFnkb03EFkye8Zt-zJBcZy2CeWRl94LTffFtYNMG_5TAJunjkg=="; //dimitrije
         private static string _token_tea = "eSy0_-op61hsHt9jeDdBAYsyy3XR0N4VzyrUwbz0fwPg3muYH_U8Sx5N0ejbYMa-CMTXFf-0UsF8uMwOlqBavg=="; //tea
         private static string _bucket = "analytics-bucket";
         private static string _org = "organization";
