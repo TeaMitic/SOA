@@ -119,5 +119,5 @@
   </ul>
   Otvoriti u browser-u adresu <a href="http://localhost:5170/swagger/index.html">http://localhost:5170/swagger</a></br>
   Otvoreni prozor prikazuje swagger ui koji olaksava testiranje funkcionalnosti api funkcija.</br>
-  Simuliranje senzora izvrisiti pozivom funkcije <b>GenerateData</b> iz <b>Agriculture</b> controller-a sa test podacima: sleppSeconds: 0.5</br>
+  Simuliranje senzora izvrisiti pozivom funkcije <b>GenerateData</b> iz <b>Agriculture</b> controller-a sa test podacima: sleepSeconds: 0.5</br>
 </body>
